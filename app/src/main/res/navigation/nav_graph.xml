@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/animeFragment">
+
+    <fragment
+        android:id="@+id/animeFragment"
+        android:name="com.alurwa.animerisuto.ui.anime.AnimeFragment"
+        android:label="Anime"
+        tools:layout="@layout/fragment_anime" />
+
+    <fragment
+        android:id="@+id/mangaFragment"
+        android:name="com.alurwa.animerisuto.ui.manga.MangaFragment"
+        android:label="Manga"
+        tools:layout="@layout/fragment_manga" />
+</navigation>
