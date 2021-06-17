@@ -59,7 +59,7 @@ class MangaFragment : Fragment() {
     }
 
     private fun getManga() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.mangaPaging.collectLatest {
                 adapter.submitData(it)
             }
@@ -67,13 +67,13 @@ class MangaFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 binding.swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
             }
         }
 
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collect { loadStates ->
                 //   Timber.d("Refresh tok " + loadStates.refresh.toString())
                 //   Timber.d("Source Refresh " + loadStates.source.refresh.toString())
@@ -81,7 +81,7 @@ class MangaFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow
 
                 // Only emit when REFRESH LoadState for RemoteMediator changes.

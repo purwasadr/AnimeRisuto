@@ -56,7 +56,7 @@ class AnimeFragment : Fragment() {
     }
 
     private fun getAnime() {
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.getAnimeList.collectLatest {
                 adapter.submitData(it)
             }
@@ -64,13 +64,13 @@ class AnimeFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             adapter.loadStateFlow.collectLatest { loadStates ->
                 binding.swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
             }
         }
 
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collect { loadStates ->
                 //   Timber.d("Refresh tok " + loadStates.refresh.toString())
                 //   Timber.d("Source Refresh " + loadStates.source.refresh.toString())
@@ -78,7 +78,7 @@ class AnimeFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow
 
                 // Only emit when REFRESH LoadState for RemoteMediator changes.
