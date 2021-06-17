@@ -1,3 +1,5 @@
 # Anime Risuto
 
-this app is for get information about anime
+This app is for get information about anime
+
+This project is currently under development
