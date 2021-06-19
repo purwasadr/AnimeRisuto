@@ -1,10 +1,12 @@
 package com.alurwa.animerisuto.binding
 
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.paging.LoadState
+import com.bumptech.glide.Glide
 
 /**
  * Created by Purwa Shadr Al 'urwa on 17/05/2021
@@ -16,11 +18,9 @@ object BindingAdapters {
     @BindingAdapter("imagePoster")
     fun imagePoster(imageView: ImageView, posterPath: String?) {
         if (!posterPath.isNullOrEmpty()) {
-          /*  Glide.with(imageView.context)
+            Glide.with(imageView.context)
                 .load(Uri.parse("$posterPath"))
                 .into(imageView)
-
-           */
         }
     }
 
