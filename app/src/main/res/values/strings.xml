@@ -16,4 +16,5 @@
     <string name="menu_login">Login</string>
     <string name="item_desc_anime_poster">Poster Anime</string>
     <string name="menu_logout">Logout</string>
+    <string name="desc_img_poster">Poster Image</string>
 </resources>
