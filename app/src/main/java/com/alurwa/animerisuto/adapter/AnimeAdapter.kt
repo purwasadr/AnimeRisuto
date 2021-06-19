@@ -12,7 +12,9 @@ import com.alurwa.animerisuto.model.Anime
  * Created by Purwa Shadr Al 'urwa on 13/05/2021
  */
 
-class AnimeAdapter : PagingDataAdapter<Anime, AnimeAdapter.ViewHolder>(COMPARATOR) {
+class AnimeAdapter(
+    private val onItemClickCallback: (id: Int) -> Unit
+) : PagingDataAdapter<Anime, AnimeAdapter.ViewHolder>(COMPARATOR) {
 
     inner class ViewHolder(
         private val binding: RcvItemAnimeBinding
@@ -20,7 +22,15 @@ class AnimeAdapter : PagingDataAdapter<Anime, AnimeAdapter.ViewHolder>(COMPARATO
         fun bind(position: Int) {
             val item = getItem(position)
 
-            binding.anime = item
+            with(binding) {
+                anime = item
+                root.setOnClickListener {
+                    if (item != null) {
+                        onItemClickCallback.invoke(item.id)
+                    }
+                }
+            }
+
         }
     }
 
