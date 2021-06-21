@@ -47,4 +47,21 @@ object BindingAdapters {
     @BindingAdapter("isVisible")
     fun isVisible(view: View, loadState: LoadState) {
     }
+
+    @JvmStatic
+    @BindingAdapter("txtDuration")
+    fun txtDuration(txtView: TextView, duration: Int?) {
+        if (duration != null) {
+            val ba = (duration / 60)
+            val result = if (duration % 60 == 0 && duration >= 60) {
+                "$ba j "
+            } else if (duration < 60) {
+                "$duration min"
+            } else {
+                "$ba j " + (duration % 60) + " min"
+            }
+
+            txtView.text = result
+        }
+    }
 }
