@@ -5,7 +5,7 @@ import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.data.source.remote.network.LoginService
 import com.alurwa.animerisuto.data.source.remote.response.AccesTokenResponse
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,8 +18,9 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteDataSouce @Inject constructor(
-    val loginService: LoginService,
-    val apiService: ApiService
+    private val loginService: LoginService,
+    val apiService: ApiService,
+    private val dispatcher: CoroutineDispatcher
 ) {
 
     suspend fun getAccesToken(
@@ -37,7 +38,7 @@ class RemoteDataSouce @Inject constructor(
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.toString()))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     suspend fun getCoba(): Flow<ApiResponse<AccesTokenResponse>> = flow {
         try {
@@ -46,5 +47,14 @@ class RemoteDataSouce @Inject constructor(
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.toString()))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
+
+    suspend fun getAnimeDetails(id: Int) = flow {
+        try {
+            val response = apiService.getAnimeDetails(id)
+            emit(ApiResponse.Success(response))
+        } catch (e: Exception) {
+            emit(ApiResponse.Error(e.toString()))
+        }
+    }.flowOn(dispatcher)
 }
