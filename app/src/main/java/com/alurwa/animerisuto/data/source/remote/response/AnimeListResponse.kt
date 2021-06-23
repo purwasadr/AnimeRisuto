@@ -9,5 +9,5 @@ import com.google.gson.annotations.SerializedName
 data class AnimeListResponse(
 
     @field:SerializedName("node")
-    val node: AnimeNodeResponse
+    val node: AnimeResponse
 )
