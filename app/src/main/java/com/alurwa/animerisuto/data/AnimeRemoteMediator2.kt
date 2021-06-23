@@ -20,7 +20,6 @@ import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class AnimeRemoteMediator2(
-    private val query: String,
     private val apiService: ApiService,
     private val animeRisutoDatabase: AnimeRisutoDatabase
 ) : RemoteMediator<Int, AnimeEntity>() {
@@ -87,6 +86,7 @@ class AnimeRemoteMediator2(
             )
 
             val animeList = apiResponse.data
+
             val endOfPaginationReached = animeList.isEmpty()
             animeRisutoDatabase.withTransaction {
                 // clear all tables in the database
@@ -109,7 +109,10 @@ class AnimeRemoteMediator2(
                 Timber.d("nextKey" + nextKey.toString())
 
                 val animeListEntity =
-                    DataMapper.animeResponseListToEntityWithPaging(animeList, offset)
+                    DataMapper.animeResponseListToEntityWithPaging(
+                        animeList,
+                        offset
+                    )
 
                 animeRisutoDatabase.animeRemoteKeysDao().insertAll(keys)
                 animeRisutoDatabase.animeDao().insertAll(animeListEntity)

@@ -20,7 +20,6 @@ import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class AnimeRemoteMediator(
-    private val query: String,
     private val apiService: ApiService,
     private val animeRisutoDatabase: AnimeRisutoDatabase
 ) : RemoteMediator<Int, MangaEntity>() {
