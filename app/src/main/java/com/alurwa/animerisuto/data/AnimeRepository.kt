@@ -6,10 +6,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.alurwa.animerisuto.data.source.local.LocalDataSource
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import com.alurwa.animerisuto.data.source.remote.RemoteDataSouce
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
+import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
 import com.alurwa.animerisuto.model.Anime
+import com.alurwa.animerisuto.model.AnimeDetail
+import com.alurwa.animerisuto.utils.DataMapper
 import com.alurwa.animerisuto.utils.SessionManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +27,7 @@ import javax.inject.Singleton
 class AnimeRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val remoteDataSouce: RemoteDataSouce,
+    private val localDataSource: LocalDataSource,
     private val animeRisutoDatabase: AnimeRisutoDatabase
 ) : IAnimeRepository {
 
@@ -73,7 +78,6 @@ class AnimeRepository @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
             remoteMediator = AnimeRemoteMediator2(
-                "query",
                 remoteDataSouce.apiService,
                 animeRisutoDatabase
             ),
@@ -92,7 +96,6 @@ class AnimeRepository @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false, maxSize = 40),
             remoteMediator = AnimeRemoteMediator(
-                "query",
                 remoteDataSouce.apiService,
                 animeRisutoDatabase
             ),
@@ -103,4 +106,24 @@ class AnimeRepository @Inject constructor(
             }
         }
     }
+
+    override fun getAnimeDetails(id: Int): Flow<Resource<AnimeDetail?>> =
+        object : NetworkBoundResource<AnimeDetail?, AnimeDetailResponse>() {
+            override fun loadFromDB(): Flow<AnimeDetail?> =
+                localDataSource.getAnimeDetail(id).map {
+                    it?.let { entity ->
+                        DataMapper.animeDetailEntityToDomain(entity)
+                    }
+                }
+
+            override fun shouldFetch(): Boolean = true
+
+            override suspend fun createCall(): Flow<ApiResponse<AnimeDetailResponse>> =
+                remoteDataSouce.getAnimeDetails(id)
+
+            override suspend fun saveCallResult(data: AnimeDetailResponse) {
+                val entity = DataMapper.animeDetailResponseToEntity(data)
+                localDataSource.insertAnimeDetail(entity)
+            }
+        }.asFlow()
 }

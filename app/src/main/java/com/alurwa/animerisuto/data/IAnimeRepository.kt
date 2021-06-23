@@ -2,6 +2,7 @@ package com.alurwa.animerisuto.data
 
 import androidx.paging.PagingData
 import com.alurwa.animerisuto.model.Anime
+import com.alurwa.animerisuto.model.AnimeDetail
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -19,4 +20,6 @@ interface IAnimeRepository {
     fun getAnimeList(): Flow<PagingData<Anime>>
 
     fun getMangaPaging(): Flow<PagingData<Anime>>
+
+    fun getAnimeDetails(id: Int): Flow<Resource<AnimeDetail?>>
 }
