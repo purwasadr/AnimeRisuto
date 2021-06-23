@@ -17,13 +17,13 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class RemoteDataSouce @Inject constructor(
+class RemoteDataSource @Inject constructor(
     private val loginService: LoginService,
     val apiService: ApiService,
     private val dispatcher: CoroutineDispatcher
-) {
+) : IRemoteDataSource {
 
-    suspend fun getAccesToken(
+    override suspend fun getAccesToken(
         code: String,
         codeVerifier: String
     ): Flow<ApiResponse<AccesTokenResponse>> = flow {
@@ -40,16 +40,7 @@ class RemoteDataSouce @Inject constructor(
         }
     }.flowOn(dispatcher)
 
-    suspend fun getCoba(): Flow<ApiResponse<AccesTokenResponse>> = flow {
-        try {
-            val response = apiService.getAnimeList()
-            emit(ApiResponse.Success(response))
-        } catch (e: Exception) {
-            emit(ApiResponse.Error(e.toString()))
-        }
-    }.flowOn(dispatcher)
-
-    suspend fun getAnimeDetails(id: Int) = flow {
+    override suspend fun getAnimeDetails(id: Int) = flow {
         try {
             val response = apiService.getAnimeDetails(id)
             emit(ApiResponse.Success(response))
