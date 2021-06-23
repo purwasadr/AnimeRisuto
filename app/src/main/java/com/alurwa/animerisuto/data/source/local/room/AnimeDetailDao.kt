@@ -1,12 +1,10 @@
 package com.alurwa.animerisuto.data.source.local.room
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.alurwa.animerisuto.data.source.local.entity.AnimeDetailEntity
-import com.alurwa.animerisuto.data.source.local.entity.AnimeEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
