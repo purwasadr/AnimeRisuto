@@ -8,7 +8,6 @@ import com.alurwa.animerisuto.data.source.local.entity.AnimeEntity
 import com.alurwa.animerisuto.data.source.local.entity.AnimeRemoteKeysEntity
 import com.alurwa.animerisuto.data.source.local.entity.MangaEntity
 import com.alurwa.animerisuto.data.source.local.entity.MangaRemoteKeysEntity
-import com.alurwa.animerisuto.model.AnimeDetail
 
 /**
  * Created by Purwa Shadr Al 'urwa on 15/05/2021
@@ -22,7 +21,7 @@ import com.alurwa.animerisuto.model.AnimeDetail
         MangaEntity::class,
         MangaRemoteKeysEntity::class
     ],
-    version = 7,
+    version = 8,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
