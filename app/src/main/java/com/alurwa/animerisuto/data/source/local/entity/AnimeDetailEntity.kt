@@ -3,7 +3,7 @@ package com.alurwa.animerisuto.data.source.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.alurwa.animerisuto.data.source.remote.response.StartSeasonResponse
+import com.alurwa.animerisuto.model.AnimeRecommendation
 import com.alurwa.animerisuto.model.StartSeason
 
 /**
@@ -23,4 +23,5 @@ data class AnimeDetailEntity(
     val rank: Int?,
     val mean: Float?,
     val synopsis: String?,
+    val recommendations: List<AnimeRecommendation>
 )
