@@ -23,5 +23,4 @@ class LocalDataSource @Inject constructor(
 
     override fun getAnimeDetail(animeId: Int): Flow<AnimeDetailEntity?> =
         animeDetailDao.getAnimeDetail(animeId)
-
 }
