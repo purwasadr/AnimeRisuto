@@ -2,6 +2,10 @@ package com.alurwa.animerisuto.di
 
 import com.alurwa.animerisuto.data.AnimeRepository
 import com.alurwa.animerisuto.data.IAnimeRepository
+import com.alurwa.animerisuto.data.source.local.ILocalDataSource
+import com.alurwa.animerisuto.data.source.local.LocalDataSource
+import com.alurwa.animerisuto.data.source.remote.IRemoteDataSource
+import com.alurwa.animerisuto.data.source.remote.RemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,4 +23,14 @@ abstract class RepositoryModule {
     abstract fun provideAnimeRepository(
         animeRepository: AnimeRepository
     ): IAnimeRepository
+
+    @Binds
+    abstract fun provideLocalDataSource(
+        localDataSource: LocalDataSource
+    ): ILocalDataSource
+
+    @Binds
+    abstract fun provideRemoteDataSource(
+        remoteDataSource: RemoteDataSource
+    ): IRemoteDataSource
 }
