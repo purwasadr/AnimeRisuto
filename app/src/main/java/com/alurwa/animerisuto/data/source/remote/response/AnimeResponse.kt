@@ -1,6 +1,5 @@
 package com.alurwa.animerisuto.data.source.remote.response
 
-import com.alurwa.animerisuto.model.Genre
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -16,10 +15,10 @@ data class AnimeResponse(
     val title: String,
 
     @field:SerializedName("main_picture")
-    val mainPicture: String?,
+    val mainPicture: MainPictureResponse?,
 
     @field:SerializedName("genres")
-    val genres: List<Genre>,
+    val genres: List<GenreResponse>,
 
     @field:SerializedName("mean")
     val mean: Float?
