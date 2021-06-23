@@ -14,6 +14,7 @@ import com.alurwa.animerisuto.adapter.AnimeAdapter
 import com.alurwa.animerisuto.adapter.AnimeLoadStateAdapter
 import com.alurwa.animerisuto.databinding.FragmentMangaBinding
 import com.alurwa.animerisuto.utils.SpacingDecoration
+import com.alurwa.animerisuto.utils.asMergedLoadStates
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +33,8 @@ class MangaFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter by lazy {
-        AnimeAdapter()
+        AnimeAdapter() {
+        }
     }
 
     private val viewModel: MangaViewModel by viewModels()
@@ -74,23 +76,14 @@ class MangaFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            adapter.loadStateFlow.collect { loadStates ->
-                //   Timber.d("Refresh tok " + loadStates.refresh.toString())
-                //   Timber.d("Source Refresh " + loadStates.source.refresh.toString())
-                //  Timber.d(loadStates.toString())
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow
+                .asMergedLoadStates()
 
                 // Only emit when REFRESH LoadState for RemoteMediator changes.
                 .distinctUntilChangedBy { it.refresh }
                 // Only react to cases where Remote REFRESH completes i.e., NotLoading.
                 .filter { it.refresh is LoadState.NotLoading }
                 .collect {
-                    Timber.d("Refresh tok " + it.refresh.toString())
-                    Timber.d("Source Refresh " + it.source.refresh.toString())
                     binding.listManga.scrollToPosition(0)
                 }
         }
