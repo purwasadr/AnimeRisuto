@@ -9,7 +9,6 @@ import com.alurwa.animerisuto.adapter.RecommendationAdapter
 import com.alurwa.animerisuto.data.Resource
 import com.alurwa.animerisuto.databinding.ActivityAnimeDetailBinding
 import com.alurwa.animerisuto.model.AnimeDetail
-import com.alurwa.animerisuto.model.AnimeRecommendation
 import com.alurwa.animerisuto.utils.SpacingDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +26,7 @@ class AnimeDetailActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         setupToolbar()
+        setupRecyclerView()
         getAnimeDetail()
     }
 
@@ -45,12 +45,12 @@ class AnimeDetailActivity : AppCompatActivity() {
 
     private fun setupView(animeDetail: AnimeDetail) {
         binding.animeDetail = animeDetail
-        setupRecyclerView(animeDetail.recommendations)
+        binding.listRecommendations.adapter = RecommendationAdapter(animeDetail.recommendations)
     }
 
-    private fun setupRecyclerView(animeList: List<AnimeRecommendation>) {
+    private fun setupRecyclerView() {
         with(binding) {
-            listRecommendations.setHasFixedSize(true)
+
             listRecommendations.layoutManager = LinearLayoutManager(
                 applicationContext,
                 LinearLayoutManager.HORIZONTAL,
@@ -63,7 +63,7 @@ class AnimeDetailActivity : AppCompatActivity() {
                     RecyclerView.HORIZONTAL
                 )
             )
-            listRecommendations.adapter = RecommendationAdapter(animeList)
+            listRecommendations.setHasFixedSize(true)
         }
     }
 
