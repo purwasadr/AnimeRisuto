@@ -66,8 +66,12 @@ object DataMapper {
             synopsis = input.synopsis,
             recommendations = input.recommendations.map {
                 AnimeRecommendation(it.node.id, it.node.title, it.node.mainPicture?.medium)
+            },
+            mediaType = input.mediaType,
+            status = input.status,
+            studios = input.studios.map {
+                it.name
             }
-
         )
 
     fun animeDetailEntityToDomain(
@@ -83,7 +87,10 @@ object DataMapper {
                 rank = input.rank,
                 mean = mean,
                 synopsis = synopsis,
-                recommendations = recommendations
+                recommendations = recommendations,
+                mediaType = mediaType,
+                status = status,
+                studios = studios
             )
         }
 }
