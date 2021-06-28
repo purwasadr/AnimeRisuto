@@ -64,4 +64,34 @@ object BindingAdapters {
             txtView.text = result
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("txtSentenceCase")
+    fun txtSentenceCase(txtView: TextView, txt: String?) {
+        if (txt != null) {
+            txtView.text = txt.split('_').let {
+                val stringBuilder = StringBuilder()
+                it.forEachIndexed { index, txtList ->
+                    if (index > 0) {
+                        stringBuilder.append(' ')
+                    }
+
+                    stringBuilder.append(
+                        txtList.replaceFirstChar { firstChat ->
+                            firstChat.uppercase()
+                        }
+                    )
+                }
+                stringBuilder.toString()
+            }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("txtStringList")
+    fun txtStringList(txtView: TextView, txtList: List<String>?) {
+        if (txtList != null) {
+            txtView.text = txtList.joinToString()
+        }
+    }
 }
