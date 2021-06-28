@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AnimeRisuto</string>
+    <string name="app_name">Anime Risuto</string>
     <string name="login_login">Login</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -17,4 +17,10 @@
     <string name="item_desc_anime_poster">Poster Anime</string>
     <string name="menu_logout">Logout</string>
     <string name="desc_img_poster">Poster Image</string>
+    <string name="desc_image_poster_list">Image Poster List</string>
+    <string name="anime_detail_status_info">Status</string>
+    <string name="anime_detail_type_info">Type</string>
+    <string name="anime_detail_aired_info">Aired</string>
+    <string name="anime_detail_premiere_info">Premiered</string>
+    <string name="anime_detail_studios_info">Studios</string>
 </resources>
