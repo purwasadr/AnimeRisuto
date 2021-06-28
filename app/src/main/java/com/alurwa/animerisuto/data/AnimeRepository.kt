@@ -81,7 +81,7 @@ class AnimeRepository @Inject constructor(
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
-            config = PagingConfig(pageSize = 10, enablePlaceholders = false, maxSize = 40),
+            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
             remoteMediator = AnimeRemoteMediator(
                 apiService,
                 animeRisutoDatabase
