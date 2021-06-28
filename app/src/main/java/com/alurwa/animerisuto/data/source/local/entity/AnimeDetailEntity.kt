@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.alurwa.animerisuto.model.AnimeRecommendation
 import com.alurwa.animerisuto.model.StartSeason
-import com.google.gson.annotations.SerializedName
 
 /**
  * Created by Purwa Shadr Al 'urwa on 20/06/2021
@@ -26,7 +25,7 @@ data class AnimeDetailEntity(
     val synopsis: String?,
     val recommendations: List<AnimeRecommendation>,
 
-    @ColumnInfo(name ="media_type")
+    @ColumnInfo(name = "media_type")
     val mediaType: String,
     val status: String,
     val studios: List<String>
