@@ -13,5 +13,8 @@ data class AnimeDetail(
     val rank: Int?,
     val mean: Float?,
     val synopsis: String?,
-    val recommendations: List<AnimeRecommendation>
+    val recommendations: List<AnimeRecommendation>,
+    val mediaType: String,
+    val status: String,
+    val studios: List<String>
 )
