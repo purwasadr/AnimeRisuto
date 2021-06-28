@@ -3,6 +3,7 @@ package com.alurwa.animerisuto.data.source.remote.network
 import android.content.Context
 import com.alurwa.animerisuto.BuildConfig
 import com.alurwa.animerisuto.data.source.remote.response.AccesTokenResponse
+import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeSuggestions
 import com.alurwa.animerisuto.data.source.remote.response.MangaRankingResponse
 import com.alurwa.animerisuto.data.source.remote.response.UserResponse
@@ -13,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -31,6 +33,12 @@ interface ApiService {
         @Query("limit") limit: Int
     ): AnimeSuggestions
 
+    @GET("v2/anime/{id}")
+    suspend fun getAnimeDetails(
+        @Path("id") id: Int,
+        @Query("fields") fields: String = ANIME_DETAILS_FIELD,
+    ): AnimeDetailResponse
+
     @GET("v2/manga/ranking?fields=synopsis,rank,mean,genres")
     suspend fun getMangaRanking(
         @Query("ranking_type") rankingType: String,
@@ -45,6 +53,11 @@ interface ApiService {
 
     companion object {
         private const val API_BASE_URL = "https://api.myanimelist.net/"
+        private const val ANIME_DETAILS_FIELD = "id,title,main_picture,alternative_titles,start_date," +
+            "end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw," +
+            "created_at,updated_at,media_type,status,genres,my_list_status,num_episodes," +
+            "start_season,broadcast,source,average_episode_duration,rating,pictures,background," +
+            "related_anime,related_manga,recommendations,studios,statistics"
 
         fun create(context: Context, loginService: LoginService): ApiService {
             val client = OkHttpClient.Builder()
