@@ -21,7 +21,8 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -217,7 +218,13 @@
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_recommendations" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_recommendations">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                 <include
+                   layout="@layout/content_detail_bottom"
+                   bind:animeDetail="@{animeDetail}"/>
 
 
                 <!-- <include
