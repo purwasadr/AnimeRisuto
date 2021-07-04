@@ -41,5 +41,14 @@ data class AnimeDetailResponse(
     val status: String,
 
     @field:SerializedName("studios")
-    val studios: List<StudioResponse>
+    val studios: List<StudioResponse>,
+
+    @field:SerializedName("source")
+    val source: String?,
+
+    @field:SerializedName("genres")
+    val genres: List<GenreResponse>?,
+
+    @field:SerializedName("alternative_titles")
+    val alternativeTitles: AlternativeTitlesResponse?,
 )
