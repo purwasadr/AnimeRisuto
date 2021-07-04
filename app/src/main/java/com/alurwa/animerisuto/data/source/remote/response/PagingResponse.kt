@@ -9,8 +9,8 @@ import com.google.gson.annotations.SerializedName
 data class PagingResponse(
 
     @field:SerializedName("previous")
-    val previous: String,
+    val previous: String?,
 
     @field:SerializedName("next")
-    val next: String
+    val next: String?
 )
