@@ -113,4 +113,13 @@ class AnimeRepository @Inject constructor(
                 localDataSource.insertAnimeDetail(entity)
             }
         }.asFlow()
+
+    override fun getAnimeSearch(query: String): Flow<PagingData<Anime>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { AnimePagingSource(apiService, query) }
+        ).flow
 }

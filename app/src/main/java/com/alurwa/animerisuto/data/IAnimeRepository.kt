@@ -20,4 +20,6 @@ interface IAnimeRepository {
     fun getMangaPaging(): Flow<PagingData<Anime>>
 
     fun getAnimeDetails(id: Int): Flow<Resource<AnimeDetail?>>
+
+    fun getAnimeSearch(query: String): Flow<PagingData<Anime>>
 }
