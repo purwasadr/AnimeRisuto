@@ -6,6 +6,7 @@ import com.alurwa.animerisuto.data.source.local.entity.MangaEntity
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeListResponse
 import com.alurwa.animerisuto.data.source.remote.response.MangaListResponse
+import com.alurwa.animerisuto.model.Anime
 import com.alurwa.animerisuto.model.AnimeDetail
 import com.alurwa.animerisuto.model.AnimeRecommendation
 import com.alurwa.animerisuto.model.StartSeason
@@ -26,7 +27,7 @@ object DataMapper {
                 no = paging + index,
                 title = it.node.title,
                 posterPath = it.node.mainPicture?.medium,
-                genres = it.node.genres.map { genre ->
+                genres = it.node.genres?.map { genre ->
                     genre.name
                 },
                 mean = it.node.mean
@@ -71,7 +72,12 @@ object DataMapper {
             status = input.status,
             studios = input.studios.map {
                 it.name
-            }
+            },
+            source = input.source,
+            genres = input.genres?.map {
+                it.name
+            },
+            japaneseTitle = input.alternativeTitles?.ja
         )
 
     fun animeDetailEntityToDomain(
@@ -90,7 +96,25 @@ object DataMapper {
                 recommendations = recommendations,
                 mediaType = mediaType,
                 status = status,
-                studios = studios
+                studios = studios,
+                source = source,
+                genres = genres,
+                japaneseTitle = japaneseTitle
+            )
+        }
+
+    fun animeListResponseToDomain(
+        input: List<AnimeListResponse>
+    ): List<Anime> =
+        input.map {
+            Anime(
+                id = it.node.id,
+                title = it.node.title,
+                posterPath = it.node.mainPicture?.medium,
+                genres = it.node.genres?.map { genre ->
+                    genre.name
+                },
+                mean = it.node.mean
             )
         }
 }
