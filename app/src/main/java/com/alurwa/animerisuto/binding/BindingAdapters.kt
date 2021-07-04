@@ -25,25 +25,6 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("txtGenre")
-    fun txtGenre(txtView: TextView, genres: List<String>?) {
-        if (!genres.isNullOrEmpty()) {
-            val str = StringBuffer()
-            genres.forEachIndexed { index, it ->
-                if (index < genres.lastIndex - 1) {
-                    str.append(it + ", ")
-                } else if (index == genres.lastIndex - 1) {
-                    val andSeparator = if (genres.size > 2) ", And " else " And "
-                    str.append(it + andSeparator)
-                } else {
-                    str.append(it)
-                }
-            }
-            txtView.text = str.toString()
-        }
-    }
-
-    @JvmStatic
     @BindingAdapter("isVisible")
     fun isVisible(view: View, loadState: LoadState) {
     }
@@ -90,8 +71,10 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("txtStringList")
     fun txtStringList(txtView: TextView, txtList: List<String>?) {
-        if (txtList != null) {
+        if (!txtList.isNullOrEmpty()) {
             txtView.text = txtList.joinToString()
+        } else {
+            txtView.text = "-"
         }
     }
 }
