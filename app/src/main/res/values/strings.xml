@@ -23,4 +23,11 @@
     <string name="anime_detail_aired_info">Aired</string>
     <string name="anime_detail_premiere_info">Premiered</string>
     <string name="anime_detail_studios_info">Studios</string>
+    <string name="desc_list_item_anime_star">Star Icon</string>
+    <string name="anime_detail_genres_info">Genres</string>
+    <string name="anime_detail_source_info">Source</string>
+    <string name="anime_detail_episodes_info">Episodes</string>
+    <string name="anime_detail_rank_info">Rank</string>
+    <string name="anime_detail_score_info">Score</string>
+    <string name="anime_detail_recommendations_info">Recommendations</string>
 </resources>
