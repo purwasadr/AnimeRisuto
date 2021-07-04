@@ -84,7 +84,7 @@
             android:layout_marginStart="16dp"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"
-            txtSentenceCase="@{animeDetail.startSeason.season + animeDetail.startSeason.year}"
+            txtSentenceCase="@{animeDetail.startSeason.season + ` ` + animeDetail.startSeason.year}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_premiere_info"
             tools:text="Winter 2006" />
@@ -104,14 +104,70 @@
 
         <TextView
             android:id="@+id/txt_studios_val"
+            txtStringList="@{animeDetail.studios}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_studios_info"
+            tools:text="Animonsta" />
+
+        <TextView
+            android:id="@+id/txt_source_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/anime_detail_source_info"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_studios_val" />
+
+        <TextView
+            android:id="@+id/txt_source_val"
+            txtSentenceCase="@{animeDetail.source}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"
-            txtStringList="@{animeDetail.studios}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_studios_info"
+            app:layout_constraintTop_toBottomOf="@+id/txt_source_info"
+            tools:text="Light Novel" />
+
+        <TextView
+            android:id="@+id/txt_genres_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/anime_detail_genres_info"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_source_val" />
+
+        <TextView
+            android:id="@+id/txt_genres_val"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp"
+            txtStringList="@{animeDetail.genres}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_genres_info"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:text="Animonsta" />
     </merge>
 </layout>
