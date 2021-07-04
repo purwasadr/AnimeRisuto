@@ -116,7 +116,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
-            else -> item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+            else -> item.onNavDestinationSelected(navController) ||
+                    super.onOptionsItemSelected(item)
         }
     }
 }
