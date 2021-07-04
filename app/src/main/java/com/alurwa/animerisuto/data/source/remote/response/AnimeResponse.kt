@@ -18,7 +18,7 @@ data class AnimeResponse(
     val mainPicture: MainPictureResponse?,
 
     @field:SerializedName("genres")
-    val genres: List<GenreResponse>,
+    val genres: List<GenreResponse>?,
 
     @field:SerializedName("mean")
     val mean: Float?
