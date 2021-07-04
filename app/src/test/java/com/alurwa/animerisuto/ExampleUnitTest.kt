@@ -15,7 +15,8 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         val item1: ItemForList = ItemCoba(1, "sssw", "sssa")
         val wwe: ItemForList = ItemCoba2(1, "sssw", "sssa")
-
         println(wwe == item1)
     }
+
+    fun isGanjil(a: Int): Boolean = a % 2 != 0
 }

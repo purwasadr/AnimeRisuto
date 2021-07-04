@@ -28,5 +28,10 @@ data class AnimeDetailEntity(
     @ColumnInfo(name = "media_type")
     val mediaType: String,
     val status: String,
-    val studios: List<String>
+    val studios: List<String>,
+    val source: String?,
+    val genres: List<String>?,
+
+    @ColumnInfo(name = "japanese_title")
+    val japaneseTitle: String?
 )

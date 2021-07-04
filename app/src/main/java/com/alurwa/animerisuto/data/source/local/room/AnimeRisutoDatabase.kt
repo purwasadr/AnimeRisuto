@@ -21,7 +21,7 @@ import com.alurwa.animerisuto.data.source.local.entity.MangaRemoteKeysEntity
         MangaEntity::class,
         MangaRemoteKeysEntity::class
     ],
-    version = 8,
+    version = 12,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

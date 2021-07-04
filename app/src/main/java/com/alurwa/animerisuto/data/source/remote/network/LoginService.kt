@@ -4,7 +4,7 @@ import android.net.Uri
 import com.alurwa.animerisuto.BuildConfig
 import com.alurwa.animerisuto.constant.OAUTH_BASE_URL
 import com.alurwa.animerisuto.constant.REDIRECT_URI
-import com.alurwa.animerisuto.data.source.remote.response.AccesTokenResponse
+import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,7 +27,7 @@ interface LoginService {
         @Field("code_verifier") codeVerifier: String,
         @Field("grant_type") grantType: String,
         @Field("redirect_uri") redirectUri: Uri = Uri.parse(REDIRECT_URI)
-    ): AccesTokenResponse
+    ): AccessTokenResponse
 
     @FormUrlEncoded
     @POST("v1/oauth2/token")
@@ -35,7 +35,7 @@ interface LoginService {
         @Field("refresh_token") tokenRefresh: String,
         @Field("grant_type") grantType: String = "refresh_token",
         @Field("client_id") clientId: String = BuildConfig.CLIENT_ID,
-    ): AccesTokenResponse
+    ): AccessTokenResponse
 
     companion object {
 

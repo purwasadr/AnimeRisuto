@@ -23,7 +23,7 @@ data class AnimeEntity(
     @ColumnInfo(name = "poster_path")
     val posterPath: String?,
 
-    val genres: List<String>,
+    val genres: List<String>?,
 
     val mean: Float?
 )

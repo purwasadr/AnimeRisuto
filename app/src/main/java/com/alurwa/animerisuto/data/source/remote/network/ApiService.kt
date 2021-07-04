@@ -2,7 +2,7 @@ package com.alurwa.animerisuto.data.source.remote.network
 
 import android.content.Context
 import com.alurwa.animerisuto.BuildConfig
-import com.alurwa.animerisuto.data.source.remote.response.AccesTokenResponse
+import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeSuggestions
 import com.alurwa.animerisuto.data.source.remote.response.MangaRankingResponse
@@ -25,7 +25,14 @@ import java.util.concurrent.TimeUnit
 interface ApiService {
 
     @GET("v2/anime?q=one&limit=4")
-    suspend fun getAnimeList(): AccesTokenResponse
+    suspend fun getAnimeList(): AccessTokenResponse
+
+    @GET("v2/anime?fields=$ANIME_LIST_FIELD")
+    suspend fun getAnimeSearch(
+        @Query("q") query: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): AnimeSuggestions
 
     @GET("v2/anime/suggestions?fields=synopsis,rank,mean,genres")
     suspend fun getAnimeSuggestion(
@@ -53,6 +60,7 @@ interface ApiService {
 
     companion object {
         private const val API_BASE_URL = "https://api.myanimelist.net/"
+        private const val ANIME_LIST_FIELD = "synopsis,rank,mean,genres"
         private const val ANIME_DETAILS_FIELD = "id,title,main_picture,alternative_titles,start_date," +
             "end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw," +
             "created_at,updated_at,media_type,status,genres,my_list_status,num_episodes," +
