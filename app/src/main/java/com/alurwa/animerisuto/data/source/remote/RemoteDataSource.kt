@@ -4,7 +4,7 @@ import com.alurwa.animerisuto.BuildConfig
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.data.source.remote.network.LoginService
-import com.alurwa.animerisuto.data.source.remote.response.AccesTokenResponse
+import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,7 +26,7 @@ class RemoteDataSource @Inject constructor(
     override suspend fun getAccesToken(
         code: String,
         codeVerifier: String
-    ): Flow<ApiResponse<AccesTokenResponse>> = flow {
+    ): Flow<ApiResponse<AccessTokenResponse>> = flow {
         try {
             val response = loginService.getAccessToken(
                 BuildConfig.CLIENT_ID,
