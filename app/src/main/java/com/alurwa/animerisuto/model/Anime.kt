@@ -8,7 +8,7 @@ data class Anime(
     val id: Int,
     val title: String,
     val posterPath: String?,
-    val genres: List<String>,
+    val genres: List<String>?,
     val mean: Float?,
     val no: Int? = null
 )
