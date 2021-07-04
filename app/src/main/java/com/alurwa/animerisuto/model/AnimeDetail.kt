@@ -16,5 +16,8 @@ data class AnimeDetail(
     val recommendations: List<AnimeRecommendation>,
     val mediaType: String,
     val status: String,
-    val studios: List<String>
+    val studios: List<String>,
+    val source: String?,
+    val genres: List<String>?,
+    val japaneseTitle: String?,
 )
