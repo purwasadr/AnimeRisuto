@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.alurwa.animerisuto.R
 import com.alurwa.animerisuto.databinding.ActivityMainBinding
 import com.alurwa.animerisuto.ui.login.LoginActivity
+import com.alurwa.animerisuto.ui.search.SearchActivity
 import com.alurwa.animerisuto.utils.SessionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
@@ -36,8 +37,6 @@ class MainActivity : AppCompatActivity() {
 
         navHostFragment.navController
     }
-
-    //  private val viewModel: MainViewModel by viewModels()
 
     private val sessionManager by lazy {
         SessionManager(applicationContext)
@@ -109,6 +108,11 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_logout -> {
                 doLogOut()
+                true
+            }
+
+            R.id.search -> {
+                startActivity(Intent(this, SearchActivity::class.java))
                 true
             }
 
