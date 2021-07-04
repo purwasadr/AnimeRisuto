@@ -3,7 +3,7 @@ package com.alurwa.animerisuto.utils
 import android.content.Context
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import com.alurwa.animerisuto.data.source.remote.network.LoginService
-import com.alurwa.animerisuto.data.source.remote.response.AccesTokenResponse
+import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -46,7 +46,7 @@ class TokenAuthenticator(
 
     private suspend fun getRefreshToken(
         refreshToken: String
-    ): ApiResponse<AccesTokenResponse> =
+    ): ApiResponse<AccessTokenResponse> =
         try {
             val response = loginService.getRefreshToken(refreshToken)
             ApiResponse.Success(response)
