@@ -1,5 +1,6 @@
 package com.alurwa.animerisuto.ui.anime
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alurwa.animerisuto.adapter.AnimeAdapter
 import com.alurwa.animerisuto.adapter.AnimeLoadStateAdapter
 import com.alurwa.animerisuto.databinding.FragmentAnimeBinding
+import com.alurwa.animerisuto.ui.animedetail.AnimeDetailActivity
 import com.alurwa.animerisuto.utils.SpacingDecoration
+import com.alurwa.animerisuto.utils.asMergedLoadStates
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import timber.log.Timber
 
@@ -31,7 +34,7 @@ class AnimeFragment : Fragment() {
     private val viewModel: AnimeViewModel by viewModels()
 
     private val adapter by lazy {
-        AnimeAdapter()
+        AnimeAdapter() { id -> navigateToAnimeDetail(id) }
     }
 
     override fun onCreateView(
@@ -71,31 +74,14 @@ class AnimeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            adapter.loadStateFlow.collect { loadStates ->
-                //   Timber.d("Refresh tok " + loadStates.refresh.toString())
-                //   Timber.d("Source Refresh " + loadStates.source.refresh.toString())
-                //  Timber.d(loadStates.toString())
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow
-
+                .asMergedLoadStates()
                 // Only emit when REFRESH LoadState for RemoteMediator changes.
-                .distinctUntilChanged { old, new ->
-                    old.mediator?.prepend?.endOfPaginationReached ==
-                        new.mediator?.prepend?.endOfPaginationReached
-                }
-            /*    .distinctUntilChanged { old, new ->
-                    old.mediator?.refresh == new.mediator?.refresh && old.source.refresh != new.source.refresh
-                }
-
-             */
+                .distinctUntilChangedBy { it.refresh }
                 // Only react to cases where Remote REFRESH completes i.e., NotLoading.
                 .filter { it.refresh is LoadState.NotLoading }
                 .collect {
                     Timber.d("Refresh tok " + it.refresh.toString())
-                    Timber.d("Source Refresh " + it.source.refresh.toString())
                     binding.rcvAnime.scrollToPosition(0)
                 }
         }
@@ -121,6 +107,14 @@ class AnimeFragment : Fragment() {
                 adapter.retry()
             }
         )
+    }
+
+    private fun navigateToAnimeDetail(id: Int) {
+        Intent(requireContext(), AnimeDetailActivity::class.java)
+            .putExtra(AnimeDetailActivity.EXTRA_ID, id)
+            .also {
+                startActivity(it)
+            }
     }
 
     override fun onDestroyView() {
