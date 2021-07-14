@@ -11,7 +11,8 @@ import com.alurwa.animerisuto.model.AnimeRecommendation
  */
 
 class RecommendationAdapter(
-    private val animeList: List<AnimeRecommendation>
+    private val animeList: List<AnimeRecommendation>,
+    private val onItemClickCallback: (id: Int) -> Unit
 ) : RecyclerView.Adapter<RecommendationAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -34,6 +35,9 @@ class RecommendationAdapter(
             val anime = animeList[position]
 
             binding.animeRecommendation = anime
+            binding.root.setOnClickListener {
+                onItemClickCallback.invoke(anime.id)
+            }
         }
     }
 }
