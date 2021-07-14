@@ -1,6 +1,7 @@
 package com.alurwa.animerisuto.data.source.local
 
 import com.alurwa.animerisuto.data.source.local.entity.AnimeDetailEntity
+import com.alurwa.animerisuto.data.source.local.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -11,4 +12,8 @@ interface ILocalDataSource {
     suspend fun insertAnimeDetail(animeDetail: AnimeDetailEntity)
 
     fun getAnimeDetail(animeId: Int): Flow<AnimeDetailEntity?>
+
+    suspend fun insertUser(userEntity: UserEntity)
+
+    fun getUser(): Flow<UserEntity?>
 }
