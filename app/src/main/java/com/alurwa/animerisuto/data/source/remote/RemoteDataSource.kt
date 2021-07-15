@@ -5,6 +5,7 @@ import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.data.source.remote.network.LoginService
 import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
+import com.alurwa.animerisuto.data.source.remote.response.UserResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteDataSource @Inject constructor(
     private val loginService: LoginService,
-    val apiService: ApiService,
+    private val apiService: ApiService,
     private val dispatcher: CoroutineDispatcher
 ) : IRemoteDataSource {
 
@@ -31,8 +32,7 @@ class RemoteDataSource @Inject constructor(
             val response = loginService.getAccessToken(
                 BuildConfig.CLIENT_ID,
                 code,
-                codeVerifier,
-                "authorization_code"
+                codeVerifier
             )
             emit(ApiResponse.Success(response))
         } catch (e: Exception) {
@@ -43,6 +43,15 @@ class RemoteDataSource @Inject constructor(
     override suspend fun getAnimeDetails(id: Int) = flow {
         try {
             val response = apiService.getAnimeDetails(id)
+            emit(ApiResponse.Success(response))
+        } catch (e: Exception) {
+            emit(ApiResponse.Error(e.toString()))
+        }
+    }.flowOn(dispatcher)
+
+    override suspend fun getUser(): Flow<ApiResponse<UserResponse>> = flow {
+        try {
+            val response = apiService.getUser()
             emit(ApiResponse.Success(response))
         } catch (e: Exception) {
             emit(ApiResponse.Error(e.toString()))

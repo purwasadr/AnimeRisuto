@@ -3,6 +3,7 @@ package com.alurwa.animerisuto.data.source.remote
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
+import com.alurwa.animerisuto.data.source.remote.response.UserResponse
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -16,4 +17,6 @@ interface IRemoteDataSource {
     ): Flow<ApiResponse<AccessTokenResponse>>
 
     suspend fun getAnimeDetails(id: Int): Flow<ApiResponse<AnimeDetailResponse>>
+
+    suspend fun getUser(): Flow<ApiResponse<UserResponse>>
 }
