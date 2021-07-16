@@ -1,5 +1,6 @@
 package com.alurwa.animerisuto.ui.animedetail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +46,11 @@ class AnimeDetailActivity : AppCompatActivity() {
 
     private fun setupView(animeDetail: AnimeDetail) {
         binding.animeDetail = animeDetail
-        binding.listRecommendations.adapter = RecommendationAdapter(animeDetail.recommendations)
+        binding.listRecommendations.adapter = RecommendationAdapter(
+            animeDetail.recommendations
+        ) {
+            navigateToAnimeDetail(it)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -65,6 +70,14 @@ class AnimeDetailActivity : AppCompatActivity() {
             )
             listRecommendations.setHasFixedSize(true)
         }
+    }
+
+    private fun navigateToAnimeDetail(id: Int) {
+        Intent(applicationContext, AnimeDetailActivity::class.java)
+            .putExtra(EXTRA_ID, id)
+            .also {
+                startActivity(it)
+            }
     }
 
     private fun setupToolbar() {
