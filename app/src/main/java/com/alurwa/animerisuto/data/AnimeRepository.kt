@@ -12,8 +12,10 @@ import com.alurwa.animerisuto.data.source.remote.IRemoteDataSource
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
+import com.alurwa.animerisuto.data.source.remote.response.UserResponse
 import com.alurwa.animerisuto.model.Anime
 import com.alurwa.animerisuto.model.AnimeDetail
+import com.alurwa.animerisuto.model.User
 import com.alurwa.animerisuto.utils.DataMapper
 import com.alurwa.animerisuto.utils.SessionManager
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -59,7 +61,7 @@ class AnimeRepository @Inject constructor(
     }
 
     override fun getAnimeList(): Flow<PagingData<Anime>> {
-        val pagingSourceFactory = { animeRisutoDatabase.animeDao().getAnimeList() }
+        val pagingSourceFactory = { animeRisutoDatabase.animeDao().getAnimeFull() }
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
@@ -71,7 +73,13 @@ class AnimeRepository @Inject constructor(
             pagingSourceFactory = pagingSourceFactory
         ).flow.map {
             it.map { anime ->
-                Anime(anime.id, anime.title, anime.posterPath, anime.genres, anime.mean)
+                Anime(
+                    anime.anime.animeId,
+                    anime.anime.title,
+                    anime.anime.posterPath,
+                    anime.genres.map { genre -> genre.name },
+                    anime.anime.mean
+                )
             }
         }
     }
@@ -89,7 +97,7 @@ class AnimeRepository @Inject constructor(
             pagingSourceFactory = pagingSourceFactory
         ).flow.map {
             it.map { anime ->
-                Anime(anime.id, anime.title, anime.posterPath, anime.genres, anime.mean, anime.no)
+                Anime(anime.id, anime.title, anime.posterPath, anime.genres, anime.mean)
             }
         }
     }
@@ -122,4 +130,21 @@ class AnimeRepository @Inject constructor(
             ),
             pagingSourceFactory = { AnimePagingSource(apiService, query) }
         ).flow
+
+    override fun getUser(): Flow<Resource<User?>> =
+        object : NetworkBoundResource<User?, UserResponse>() {
+            override fun loadFromDB(): Flow<User?> =
+                localDataSource.getUser().map {
+                    it?.toUserDomain
+                }
+
+            override fun shouldFetch(): Boolean = true
+
+            override suspend fun createCall(): Flow<ApiResponse<UserResponse>> =
+                remoteDataSource.getUser()
+
+            override suspend fun saveCallResult(data: UserResponse) {
+                localDataSource.insertUser(data.toUserEntity)
+            }
+        }.asFlow()
 }
