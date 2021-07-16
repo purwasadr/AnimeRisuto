@@ -25,7 +25,7 @@ interface LoginService {
         @Field("client_id") clientId: String,
         @Field("code") code: String,
         @Field("code_verifier") codeVerifier: String,
-        @Field("grant_type") grantType: String,
+        @Field("grant_type") grantType: String = "authorization_code",
         @Field("redirect_uri") redirectUri: Uri = Uri.parse(REDIRECT_URI)
     ): AccessTokenResponse
 
