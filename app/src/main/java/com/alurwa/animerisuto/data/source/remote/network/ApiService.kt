@@ -55,7 +55,7 @@ interface ApiService {
 
     @GET("v2/users/@me")
     suspend fun getUser(
-        @Query("fields") fields: String
+        @Query("fields") fields: String = USER_FIELD
     ): UserResponse
 
     companion object {
@@ -66,6 +66,8 @@ interface ApiService {
             "created_at,updated_at,media_type,status,genres,my_list_status,num_episodes," +
             "start_season,broadcast,source,average_episode_duration,rating,pictures,background," +
             "related_anime,related_manga,recommendations,studios,statistics"
+
+        private const val USER_FIELD = "anime_statistics,gender,is_supporter,picture"
 
         fun create(context: Context, loginService: LoginService): ApiService {
             val client = OkHttpClient.Builder()
