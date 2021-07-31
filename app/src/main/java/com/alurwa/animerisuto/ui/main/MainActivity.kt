@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
@@ -13,6 +14,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.alurwa.animerisuto.R
+import com.alurwa.animerisuto.data.Resource
 import com.alurwa.animerisuto.databinding.ActivityMainBinding
 import com.alurwa.animerisuto.ui.login.LoginActivity
 import com.alurwa.animerisuto.ui.search.SearchActivity
@@ -42,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         SessionManager(applicationContext)
     }
 
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!sessionManager.isLogged()) {
@@ -55,6 +59,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         setupNavigationDrawer()
+
+        getUser()
     }
 
     private fun setupNavigationDrawer() {
@@ -71,6 +77,19 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navView.setupWithNavController(navController)
+    }
+
+    private fun getUser() {
+        viewModel.user.observe(this) {
+            when (it) {
+                is Resource.Success -> {
+                    val user = it.data
+                    //  val txtName = findViewById<TextView>(R.id.txt_name)
+
+                    // txtName.text = user?.name
+                }
+            }
+        }
     }
 
     private fun doLogOut() {
@@ -117,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> item.onNavDestinationSelected(navController) ||
-                    super.onOptionsItemSelected(item)
+                super.onOptionsItemSelected(item)
         }
     }
 }
