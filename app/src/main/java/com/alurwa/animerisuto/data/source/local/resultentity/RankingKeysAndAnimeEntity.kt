@@ -18,4 +18,4 @@ data class RankingKeysAndAnimeEntity(
         entityColumn = "id"
     )
     override val relation: AnimeEntity
-) : EntryWithAnime<AnimeRankingKeyEntity>
+) : EntryWithRelation<AnimeRankingKeyEntity, AnimeEntity>
