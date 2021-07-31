@@ -1,13 +1,15 @@
 package com.alurwa.animerisuto.ui.search
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +46,7 @@ class SearchActivity : AppCompatActivity() {
         setupToolbar()
         setupRecyclerView()
     }
+
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
@@ -96,7 +99,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setupSearchInput(menu: Menu) {
-        // val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchMenu = menu.findItem(R.id.search)
         val searchView = searchMenu?.actionView as SearchView
 
@@ -106,8 +109,9 @@ class SearchActivity : AppCompatActivity() {
 
         with(searchView) {
             maxWidth = 10000
-            //   setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            queryHint = "Search Anime"
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isIconified = false
+            //   queryHint = "Search Anime"
             inputType = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
         }
 
