@@ -29,6 +29,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.AnimeRisuto.Search">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:searchViewStyle">@style/Widget.App.SearchView</item>
+    </style>
+
     <style name="Theme.AnimeRisuto.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.AnimeRisuto.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
