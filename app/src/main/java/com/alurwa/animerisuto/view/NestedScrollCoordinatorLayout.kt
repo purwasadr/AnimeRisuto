@@ -8,7 +8,6 @@ import androidx.core.view.NestedScrollingChild2
 import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 
-
 class NestedScrollCoordinatorLayout : CoordinatorLayout, NestedScrollingChild2 {
     private var mChildHelper: NestedScrollingChildHelper
 
