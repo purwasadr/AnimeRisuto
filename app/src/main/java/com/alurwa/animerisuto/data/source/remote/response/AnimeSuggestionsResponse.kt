@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Created by Purwa Shadr Al 'urwa on 16/05/2021
  */
 
-data class AnimeSuggestions(
+data class AnimeSuggestionsResponse(
 
     @field:SerializedName("data")
     val data: List<AnimeListResponse>,
