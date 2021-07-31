@@ -16,7 +16,9 @@ interface IAnimeRepository {
         codeVerifier: String
     ): Flow<Resource<Boolean>>
 
-    fun getAnimeList(): Flow<PagingData<Anime>>
+    fun getAnimeSuggestions(): Flow<PagingData<Anime>>
+
+    fun getAnimeRankingPaging(type: String): Flow<PagingData<Anime>>
 
     fun getMangaPaging(): Flow<PagingData<Anime>>
 

@@ -6,6 +6,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.alurwa.animerisuto.data.remotemediator.AnimeRankingAllRemoteMediator
+import com.alurwa.animerisuto.data.remotemediator.AnimeRemoteMediator
+import com.alurwa.animerisuto.data.remotemediator.AnimeRemoteMediator3
 import com.alurwa.animerisuto.data.source.local.ILocalDataSource
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import com.alurwa.animerisuto.data.source.remote.IRemoteDataSource
@@ -32,7 +35,7 @@ class AnimeRepository @Inject constructor(
     private val apiService: ApiService,
     private val remoteDataSource: IRemoteDataSource,
     private val localDataSource: ILocalDataSource,
-    private val animeRisutoDatabase: AnimeRisutoDatabase
+    private val database: AnimeRisutoDatabase
 ) : IAnimeRepository {
 
     override fun getAccessToken(
@@ -60,39 +63,77 @@ class AnimeRepository @Inject constructor(
         }
     }
 
-    override fun getAnimeList(): Flow<PagingData<Anime>> {
-        val pagingSourceFactory = { animeRisutoDatabase.animeDao().getAnimeFull() }
+    override fun getAnimeSuggestions(): Flow<PagingData<Anime>> {
+        val pagingSourceFactory = { database.animeDao().getRemoteKeyAndAnime() }
+
+//        AnimeSuggestionRemoteMediator(
+//            animeRisutoDatabase.animeRemoteKeysDao(),
+//            animeRisutoDatabase,
+//            apiService
+//        )
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-            remoteMediator = AnimeRemoteMediator2(
+            remoteMediator = AnimeRemoteMediator3(
                 apiService,
-                animeRisutoDatabase
+                database
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow.map {
             it.map { anime ->
                 Anime(
-                    anime.anime.animeId,
-                    anime.anime.title,
-                    anime.anime.posterPath,
-                    anime.genres.map { genre -> genre.name },
-                    anime.anime.mean
+                    anime.animeEntity.id,
+                    anime.animeEntity.title,
+                    anime.animeEntity.posterPath,
+                    anime.animeEntity.genres,
+                    anime.animeEntity.mean
+                )
+            }
+        }
+    }
+
+    override fun getAnimeRankingPaging(type: String): Flow<PagingData<Anime>> {
+        val pagingSourceFactory = {
+            database.animeRankingKeyDao().getRankingKeyAndAnime(type)
+        }
+
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+//            remoteMediator = AnimeRankingRemoteMediator(
+//                apiService,
+//                animeRisutoDatabase,
+//                type
+//            ),
+            remoteMediator = AnimeRankingAllRemoteMediator(
+                type,
+                apiService,
+                database,
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow.map {
+            it.map { anime ->
+                Anime(
+                    anime.relation.id,
+                    anime.relation.title,
+                    anime.relation.posterPath,
+                    anime.relation.genres,
+                    anime.relation.mean
                 )
             }
         }
     }
 
     override fun getMangaPaging(): Flow<PagingData<Anime>> {
-        val pagingSourceFactory = { animeRisutoDatabase.mangaDao().getMangaList() }
+        val pagingSourceFactory = { database.mangaDao().getMangaList() }
 
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
             remoteMediator = AnimeRemoteMediator(
                 apiService,
-                animeRisutoDatabase
+                database
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow.map {
