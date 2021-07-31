@@ -1,4 +1,4 @@
-package com.alurwa.animerisuto.data.source.local.room
+package com.alurwa.animerisuto.data.source.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,9 +16,9 @@ interface MangaRemoteKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(remoteKey: List<MangaRemoteKeysEntity>)
 
-    @Query("SELECT * FROM manga_remote_keys WHERE id = :mangaId")
+    @Query("SELECT * FROM manga_remote_key WHERE id = :mangaId")
     suspend fun remoteKeysId(mangaId: Int): MangaRemoteKeysEntity?
 
-    @Query("DELETE FROM manga_remote_keys")
+    @Query("DELETE FROM manga_remote_key")
     suspend fun clearRemoteKeys()
 }

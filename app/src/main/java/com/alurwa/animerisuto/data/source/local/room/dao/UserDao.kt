@@ -1,4 +1,4 @@
-package com.alurwa.animerisuto.data.source.local.room
+package com.alurwa.animerisuto.data.source.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
