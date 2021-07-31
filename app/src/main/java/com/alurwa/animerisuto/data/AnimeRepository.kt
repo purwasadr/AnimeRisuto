@@ -6,7 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.alurwa.animerisuto.data.remotemediator.AnimeRankingAllRemoteMediator
+import com.alurwa.animerisuto.data.remotemediator.AnimeRankingRemoteMediator
 import com.alurwa.animerisuto.data.remotemediator.AnimeRemoteMediator
 import com.alurwa.animerisuto.data.remotemediator.AnimeRemoteMediator3
 import com.alurwa.animerisuto.data.source.local.ILocalDataSource
@@ -106,7 +106,7 @@ class AnimeRepository @Inject constructor(
 //                animeRisutoDatabase,
 //                type
 //            ),
-            remoteMediator = AnimeRankingAllRemoteMediator(
+            remoteMediator = AnimeRankingRemoteMediator(
                 type,
                 apiService,
                 database,
