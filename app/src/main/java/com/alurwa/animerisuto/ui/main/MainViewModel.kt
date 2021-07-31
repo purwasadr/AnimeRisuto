@@ -1,6 +1,7 @@
 package com.alurwa.animerisuto.ui.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.alurwa.animerisuto.data.IAnimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,5 +14,5 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repository: IAnimeRepository
 ) : ViewModel() {
-    //  val coba = repository.getAnimeList()
+    val user = repository.getUser().asLiveData()
 }
