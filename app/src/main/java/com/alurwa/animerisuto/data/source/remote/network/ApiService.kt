@@ -4,7 +4,8 @@ import android.content.Context
 import com.alurwa.animerisuto.BuildConfig
 import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
-import com.alurwa.animerisuto.data.source.remote.response.AnimeSuggestions
+import com.alurwa.animerisuto.data.source.remote.response.AnimeRankingResponse
+import com.alurwa.animerisuto.data.source.remote.response.AnimeSuggestionsResponse
 import com.alurwa.animerisuto.data.source.remote.response.MangaRankingResponse
 import com.alurwa.animerisuto.data.source.remote.response.UserResponse
 import com.alurwa.animerisuto.utils.TokenAuthenticator
@@ -32,19 +33,27 @@ interface ApiService {
         @Query("q") query: String,
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): AnimeSuggestions
+    ): AnimeSuggestionsResponse
 
     @GET("v2/anime/suggestions?fields=synopsis,rank,mean,genres")
     suspend fun getAnimeSuggestion(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): AnimeSuggestions
+    ): AnimeSuggestionsResponse
 
     @GET("v2/anime/{id}")
     suspend fun getAnimeDetails(
         @Path("id") id: Int,
         @Query("fields") fields: String = ANIME_DETAILS_FIELD,
     ): AnimeDetailResponse
+
+    @GET("v2/anime/ranking?")
+    suspend fun getAnimeRanking(
+        @Query("ranking_type") rankingType: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int,
+        @Query("fields") fields: String = ANIME_LIST_FIELD,
+    ): AnimeRankingResponse
 
     @GET("v2/manga/ranking?fields=synopsis,rank,mean,genres")
     suspend fun getMangaRanking(
