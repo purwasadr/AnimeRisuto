@@ -1,4 +1,4 @@
-package com.alurwa.animerisuto.data
+package com.alurwa.animerisuto.data.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -29,10 +29,9 @@ abstract class AbstractRemoteMediator<ResultEntity : Any, Response, RemoteKeyEnt
 
     abstract suspend fun doDatabaseInRefresh()
 
-    abstract suspend fun insertToEntity(listResponse: List<Response>, offset: Int)
-
-    abstract suspend fun insertToRemoteKeys(
+    abstract suspend fun insertToDatabase(
         listResponse: List<Response>,
+        offset: Int,
         prevKey: Int?,
         nextKey: Int?
     )
@@ -45,15 +44,16 @@ abstract class AbstractRemoteMediator<ResultEntity : Any, Response, RemoteKeyEnt
 
     abstract fun getRemoteKeyPrev(remoteKey: RemoteKeyEntity?): Int?
 
+    abstract suspend fun getRemoteKeyToClosest(state: ResultEntity?): RemoteKeyEntity?
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, ResultEntity>
     ): MediatorResult {
         val page = when (loadType) {
             LoadType.REFRESH -> {
-//                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-//                remoteKeys?.nextKey?.minus(1) ?: MYANIMELIST_STARTING_INDEX
-                1000
+                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                getRemoteKeyNext(remoteKeys)?.minus(1) ?: MYANIMELIST_STARTING_INDEX
             }
 
             LoadType.PREPEND -> {
@@ -105,8 +105,9 @@ abstract class AbstractRemoteMediator<ResultEntity : Any, Response, RemoteKeyEnt
                 Timber.d("nextKey" + nextKey.toString())
 
                 //  val animeListEntity = DataMapper.animeResponseListToEntity(animeList)
-                insertToRemoteKeys(mangaList, prevKey, nextKey)
-                insertToEntity(mangaList, offset)
+                insertToDatabase(mangaList, offset, prevKey, nextKey)
+//                insertToRemoteKeys(mangaList, prevKey, nextKey)
+//                insertToEntity(mangaList, offset)
             }
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
@@ -116,20 +117,6 @@ abstract class AbstractRemoteMediator<ResultEntity : Any, Response, RemoteKeyEnt
             return MediatorResult.Error(exception)
         }
     }
-
-//    private suspend fun getRemoteKeyForLastItem(
-//        state: PagingState<Int, ResultEntity>
-//    ): RemoteKeyEntity? {
-//        // Get the last page that was retrieved, that contained items.
-//        // From that last page, get the last item
-//        return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
-//            ?.let { manga ->
-//                // Get the remote keys of the last item retrieved
-//               // getRemoteKeysId()
-//                getRemoteKeyEntity(manga)
-//             //   getDatabase().mangaRemoteKeysDao().remoteKeysId(getRemoteKeyId(manga))
-//            }
-//    }
 
     private suspend fun getRemoteKeyForLastItem(
         state: PagingState<Int, ResultEntity>
@@ -154,21 +141,18 @@ abstract class AbstractRemoteMediator<ResultEntity : Any, Response, RemoteKeyEnt
             ?.let { manga ->
                 // Get the remote keys of the first items retrieved
                 getRemoteKeyId(manga)
-                // getDatabase().mangaRemoteKeysDao().remoteKeysId(manga.id)
             }
     }
 
-//    private suspend fun getRemoteKeyClosestToCurrentPosition(
-//        state: PagingState<Int, ResultEntity>
-//    ): MangaRemoteKeysEntity? {
-//        // The paging library is trying to load data after the anchor position
-//        // Get the item closest to the anchor position
-//        return state.anchorPosition?.let { position ->
-//            state.closestItemToPosition(position)?.id?.let { mangaId ->
-//                getDatabase().mangaRemoteKeysDao().remoteKeysId(mangaId)
-//            }
-//        }
-//    }
+    private suspend fun getRemoteKeyClosestToCurrentPosition(
+        state: PagingState<Int, ResultEntity>
+    ): RemoteKeyEntity? {
+        // The paging library is trying to load data after the anchor position
+        // Get the item closest to the anchor position
+        return state.anchorPosition?.let { position ->
+            getRemoteKeyToClosest(state.closestItemToPosition(position))
+        }
+    }
 
     companion object {
         const val MYANIMELIST_STARTING_INDEX = 0
