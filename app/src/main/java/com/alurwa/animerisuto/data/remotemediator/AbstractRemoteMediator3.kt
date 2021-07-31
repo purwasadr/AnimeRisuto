@@ -6,7 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.alurwa.animerisuto.data.source.local.entity.IAnimeKeyEntity
-import com.alurwa.animerisuto.data.source.local.resultentity.EntryWithAnime
+import com.alurwa.animerisuto.data.source.local.resultentity.EntryWithRelation
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import retrofit2.HttpException
 import timber.log.Timber
@@ -14,7 +14,7 @@ import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 abstract class AbstractRemoteMediator3<
-    ResultEntity : EntryWithAnime<*>,
+    ResultEntity : EntryWithRelation<*, *>,
     Response,
     RemoteKeyEntity : IAnimeKeyEntity
     >(private val database: AnimeRisutoDatabase) : RemoteMediator<Int, ResultEntity>() {
@@ -99,10 +99,7 @@ abstract class AbstractRemoteMediator3<
                     onLoadStateRefresh()
                 }
 
-                //  val animeListEntity = DataMapper.animeResponseListToEntity(animeList)
                 insertToDatabase(mangaList, offset, prevKey, nextKey)
-//                insertToRemoteKeys(mangaList, prevKey, nextKey)
-//                insertToEntity(mangaList, offset)
             }
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
