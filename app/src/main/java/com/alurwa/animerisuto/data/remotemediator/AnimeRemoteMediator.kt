@@ -1,4 +1,4 @@
-package com.alurwa.animerisuto.data
+package com.alurwa.animerisuto.data.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -70,8 +70,8 @@ class AnimeRemoteMediator(
 
         try {
             val offset = page * state.config.pageSize
-            Timber.d("offset" + offset.toString())
-            Timber.d("page" + page.toString())
+            Timber.d("offset%s", offset.toString())
+            Timber.d("page%s", page.toString())
             val apiResponse = apiService.getMangaRanking(
                 "all",
                 offset,
