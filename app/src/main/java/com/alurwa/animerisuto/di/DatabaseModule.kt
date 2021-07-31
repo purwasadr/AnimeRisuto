@@ -2,8 +2,8 @@ package com.alurwa.animerisuto.di
 
 import android.content.Context
 import androidx.room.Room
-import com.alurwa.animerisuto.data.source.local.room.AnimeDao
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
+import com.alurwa.animerisuto.data.source.local.room.dao.AnimeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
