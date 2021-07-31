@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/activity_anime_detail">
+
+    <data>
+
+        <variable
+            name="animeDetail"
+            type="com.alurwa.animerisuto.model.AnimeDetail" />
+    </data>
+
+    <merge>
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{animeDetail.title}"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/card_img_poster"
+            tools:text="Your Name." />
+
+        <TextView
+            android:id="@+id/txt_japanese_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintTop_toBottomOf="@id/txt_title"
+            tools:text="mmd" />
+
+        <TextView
+            android:id="@+id/txt_num_episodes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:text="Duration"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toStartOf="@id/txt_ranked"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+
+        <TextView
+            android:id="@+id/txt_num_episodes_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toStartOf="@id/txt_num_episodes"
+            app:layout_constraintTop_toBottomOf="@id/txt_num_episodes"
+            tools:text="2h 20min" />
+
+        <TextView
+            android:id="@+id/txt_ranked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Duration"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toStartOf="@id/txt_mean_val"
+            app:layout_constraintStart_toEndOf="@id/txt_num_episodes"
+            app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+
+        <TextView
+            android:id="@+id/txt_ranked_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toStartOf="@id/txt_ranked"
+            app:layout_constraintTop_toBottomOf="@id/txt_ranked"
+            tools:text="2h 20min" />
+
+        <TextView
+            android:id="@+id/txt_mean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Duration"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="@id/txt_mean_val"
+            app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+
+        <TextView
+            android:id="@+id/txt_mean_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txt_ranked"
+            app:layout_constraintTop_toBottomOf="@id/txt_mean"
+            tools:text="8.8" />
+    </merge>
+</layout>
