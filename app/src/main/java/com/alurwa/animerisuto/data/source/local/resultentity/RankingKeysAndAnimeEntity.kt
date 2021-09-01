@@ -6,9 +6,8 @@ import com.alurwa.animerisuto.data.source.local.entity.AnimeEntity
 import com.alurwa.animerisuto.data.source.local.entity.AnimeRankingKeyEntity
 
 /**
- * Created by Purwa Shadr Al 'urwa on 18/07/2021
+ * Menerapkan [EntryWithRelation] agar dapat digunakan untuk [RemoteMediator]
  */
-
 data class RankingKeysAndAnimeEntity(
     @Embedded
     override val entry: AnimeRankingKeyEntity,
