@@ -1,6 +1,5 @@
 package com.alurwa.animerisuto.ui.login
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.alurwa.animerisuto.BuildConfig
 import com.alurwa.animerisuto.constant.OAUTH_BASE_URL
-import com.alurwa.animerisuto.constant.OAUTH_PREFERENCES
 import com.alurwa.animerisuto.constant.REDIRECT_URI
 import com.alurwa.animerisuto.data.Resource
 import com.alurwa.animerisuto.databinding.ActivityLoginBinding
 import com.alurwa.animerisuto.ui.main.MainActivity
 import com.alurwa.animerisuto.utils.PkceGenerator
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -24,14 +23,15 @@ import timber.log.Timber
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private val binding by lazy {
+    private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
     private val viewModel: LoginViewModel by viewModels()
 
-    val codeVerifier = PkceGenerator.generateVerifier(128)
-    val codeChallenge = codeVerifier
+    private val codeVerifier = PkceGenerator.generateVerifier(128)
+ //   val codeChallenge = codeVerifier
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 "&client_id=" + BuildConfig.CLIENT_ID + "&code_challenge=" + codeVerifier +
                 "&state=" + STATE + "&redirect_uri=" + REDIRECT_URI
         )
+
         val mIntent = Intent(Intent.ACTION_VIEW, loginUrl)
 
         binding.btnLogin.setOnClickListener {
@@ -60,18 +61,28 @@ class LoginActivity : AppCompatActivity() {
 
         if (code != null && receivedState == STATE) {
             lifecycleScope.launch {
-                viewModel.getAccesToken(code, codeVerifier).collectLatest {
-                    if (it is Resource.Success) {
-                        val sharedPref = getSharedPreferences(OAUTH_PREFERENCES, Context.MODE_PRIVATE)
+                viewModel.getAccesToken(code, codeVerifier)
+                    .collectLatest {
+                        when (it) {
+                            is Resource.Success -> {
 
-                        Toast.makeText(applicationContext, "Succes", Toast.LENGTH_SHORT).show()
+                                Snackbar.make(
+                                    binding.root, "Login Success",Snackbar.LENGTH_SHORT
+                                ).show()
 
-                        navigateToMain()
-                        Timber.d("Access token cokkk ${sharedPref.getString("access_token", "Raono")}")
-                    } else if (it is Resource.Error) {
-                        Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
-                    } else if (it is Resource.Loading) {
-                    }
+                                navigateToMain()
+                            }
+                            is Resource.Error -> {
+                                Toast.makeText(
+                                    applicationContext,
+                                    it.message.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            is Resource.Loading -> {
+
+                            }
+                        }
                 }
             }
         }
