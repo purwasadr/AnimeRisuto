@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.AnimeRisuto" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/blue_dark_500</item>
+        <item name="colorPrimaryVariant">@color/blue_dark_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,11 +12,22 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
-        <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
+        
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+
+        <item name="textAppearanceHeadline1">@style/TextAppearance.App.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.App.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.App.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.App.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.App.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.App.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.App.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.App.Overline</item>
+        <item name="textAppearanceButton">@style/TextAppearance.App.Button</item>
 
     </style>
 
@@ -31,7 +42,15 @@
 
     <style name="Theme.AnimeRisuto.Search">
         <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:searchViewStyle">@style/Widget.App.SearchView</item>
+<!--        <item name="android:searchViewStyle">@style/Widget.App.SearchView</item>-->
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView.ActionBar</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar.Search</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Toolbar.Search" parent="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+        <item name="android:editTextColor">?attr/colorOnPrimary</item>
+        <!-- <item name="actionMenuTextColor">@color/colorPrimary</item> -->
     </style>
 
     <style name="Theme.AnimeRisuto.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
