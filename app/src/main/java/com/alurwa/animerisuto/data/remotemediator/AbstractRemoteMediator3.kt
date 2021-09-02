@@ -12,12 +12,17 @@ import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
 
+/**
+ * Kelas yang digunakan untuk mempermudah penggunaan [RemoteMediator]
+ */
 @OptIn(ExperimentalPagingApi::class)
 abstract class AbstractRemoteMediator3<
     ResultEntity : EntryWithRelation<*, *>,
     Response,
     RemoteKeyEntity : IAnimeKeyEntity
     >(private val database: AnimeRisutoDatabase) : RemoteMediator<Int, ResultEntity>() {
+
+
     override suspend fun initialize(): InitializeAction {
         // Launch remote refresh as soon as paging starts and do not trigger remote prepend or
         // append until refresh has succeeded. In cases where we don't mind showing out-of-date,
@@ -26,8 +31,18 @@ abstract class AbstractRemoteMediator3<
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
+    /**
+     * Dipanggil saat loadstate dalam posisi [LoadType.REFRESH]
+     */
     abstract suspend fun onLoadStateRefresh()
 
+    /**
+     * Dipanggil untuk melakukan operasi tulis ke database
+     * @param listResponse daftar [Response]
+     * @param offset nilai yang didapat dari halaman * pageSize
+     * @param prevKey nilai key sebelumnya
+     * @param nextKey nilai key selanjutnya
+     */
     abstract suspend fun insertToDatabase(
         listResponse: List<Response>,
         offset: Int,
@@ -35,8 +50,18 @@ abstract class AbstractRemoteMediator3<
         nextKey: Int?
     )
 
+    /**
+     * Dipanggil untuk mendapatkan data yang dibutuhkan
+     *
+     * @param offset nilai yang didapat dari halaman * pageSize
+     * @param pageSize ukuran halaman
+     * @return daftar object DTO
+     */
     abstract suspend fun getDataList(offset: Int, pageSize: Int): List<Response>
 
+    /**
+     * Dipanggil untuk mendapatkan id dari remote key
+     */
     abstract suspend fun getRemoteKeyId(resultEntity: ResultEntity): RemoteKeyEntity?
 
     override suspend fun load(
@@ -70,7 +95,6 @@ abstract class AbstractRemoteMediator3<
                 // will call this method again if RemoteKeys becomes non-null.
                 // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
                 // the end of pagination for append.
-//                val nextKey = remoteKeys?.nextKey
                 val nextKey = remoteKeys?.nextKey
                 if (nextKey == null) {
                     return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
@@ -136,6 +160,9 @@ abstract class AbstractRemoteMediator3<
             }
     }
 
+    /**
+     * Dipanggil untuk mendapatkan key dari posisi terakhir
+     */
     private suspend fun getRemoteKeyClosestToCurrentPosition(
         state: PagingState<Int, ResultEntity>
     ): RemoteKeyEntity? {
