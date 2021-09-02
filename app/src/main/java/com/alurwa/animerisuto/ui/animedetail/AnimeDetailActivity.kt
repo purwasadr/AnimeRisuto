@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alurwa.animerisuto.adapter.RecommendationAdapter
@@ -12,6 +13,8 @@ import com.alurwa.animerisuto.databinding.ActivityAnimeDetailBinding
 import com.alurwa.animerisuto.model.AnimeDetail
 import com.alurwa.animerisuto.utils.SpacingDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AnimeDetailActivity : AppCompatActivity() {
@@ -22,26 +25,45 @@ class AnimeDetailActivity : AppCompatActivity() {
 
     private val viewModel: AnimeDetailViewModel by viewModels()
 
+    private var isSynopsisCollapsed: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
         setupToolbar()
+        setupSynopsis()
         setupRecyclerView()
         getAnimeDetail()
     }
 
     private fun getAnimeDetail() {
-        viewModel.animeDetail.observe(this) {
-            when (it) {
-                is Resource.Success -> {
-                    val data = it.data
-                    if (data != null) {
-                        setupView(data)
+        lifecycleScope.launch {
+            viewModel.animeDetail3.collectLatest {
+                when (it) {
+                    is Resource.Success -> {
+                        val data = it.data
+                        if (data != null) {
+                            setupView(data)
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun setupSynopsis() {
+        binding.txtSynopsis.setOnClickListener { toogleSynopsisCollapse() }
+    }
+
+    private fun toogleSynopsisCollapse() {
+        if (isSynopsisCollapsed) {
+            binding.txtSynopsis.maxLines = Integer.MAX_VALUE
+        } else {
+            binding.txtSynopsis.maxLines = 4
+        }
+
+        isSynopsisCollapsed = !isSynopsisCollapsed
     }
 
     private fun setupView(animeDetail: AnimeDetail) {
@@ -50,6 +72,10 @@ class AnimeDetailActivity : AppCompatActivity() {
             animeDetail.recommendations
         ) {
             navigateToAnimeDetail(it)
+        }
+
+        supportActionBar?.run {
+            title = animeDetail.title
         }
     }
 
@@ -84,6 +110,7 @@ class AnimeDetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
+            title = ""
         }
     }
 
