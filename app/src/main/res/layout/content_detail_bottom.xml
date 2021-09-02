@@ -21,7 +21,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/anime_detail_type_info"
             android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"
+            android:textAppearance="?attr/textAppearanceCaption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list_recommendations" />
 
@@ -31,8 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_type_info"
             tools:text="TV" />
@@ -44,8 +44,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/anime_detail_status_info"
+            android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_type_val" />
 
@@ -56,8 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_status_info"
             tools:text="Finished Airing" />
@@ -69,8 +69,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/anime_detail_premiere_info"
+            android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_status_val" />
 
@@ -80,8 +80,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_premiere_info"
             tools:text="Winter 2006" />
@@ -93,8 +93,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/anime_detail_studios_info"
+            android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_premiere_val" />
 
@@ -105,8 +105,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_studios_info"
@@ -119,8 +119,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/anime_detail_source_info"
+            android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_studios_val" />
 
@@ -130,8 +130,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_source_info"
             tools:text="Light Novel" />
@@ -143,8 +143,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/anime_detail_genres_info"
+            android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_source_val" />
 
@@ -156,8 +156,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
