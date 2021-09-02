@@ -32,6 +32,6 @@ data class AnimeDetailEntity(
     val source: String?,
     val genres: List<String>?,
 
-    @ColumnInfo(name = "japanese_title")
-    val japaneseTitle: String?
+    @ColumnInfo(name = "english_title")
+    val englishTitle: String?
 )
