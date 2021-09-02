@@ -19,5 +19,5 @@ data class AnimeDetail(
     val studios: List<String>,
     val source: String?,
     val genres: List<String>?,
-    val japaneseTitle: String?,
+    val englishTitle: String?,
 )
