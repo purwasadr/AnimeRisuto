@@ -6,14 +6,25 @@ import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.data.source.remote.response.AnimeListRankedResponse
 import com.alurwa.animerisuto.data.source.remote.response.toEntityWithPaging
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AnimeRankingRemoteMediator(
     private val type: String,
     private val apiService: ApiService,
     private val database: AnimeRisutoDatabase,
-) : AbstractRemoteMediator3<RankingKeysAndAnimeEntity, AnimeListRankedResponse, AnimeRankingKeyEntity>(database) {
+    private val dispatchers: CoroutineDispatcher = Dispatchers.IO
+) : AbstractRemoteMediator3<
+        RankingKeysAndAnimeEntity,
+        AnimeListRankedResponse,
+        AnimeRankingKeyEntity
+        >(database) {
+
     override suspend fun onLoadStateRefresh() {
-        database.animeRankingKeyDao().clearRemoteKeys(type)
+        withContext(dispatchers) {
+            database.animeRankingKeyDao().clearRemoteKeys(type)
+        }
     }
 
     override suspend fun insertToDatabase(
@@ -32,13 +43,19 @@ class AnimeRankingRemoteMediator(
             )
         }
 
-        database.animeRankingKeyDao().insertAll(keys)
-        database.animeDao().insertAll(listResponse.toEntityWithPaging(offset))
+        withContext(dispatchers) {
+            database.animeRankingKeyDao().insertAll(keys)
+            database.animeDao().insertAll(listResponse.toEntityWithPaging(offset))
+        }
     }
 
     override suspend fun getDataList(offset: Int, pageSize: Int): List<AnimeListRankedResponse> =
-        apiService.getAnimeRanking(type, offset, pageSize).data
+        withContext(dispatchers) {
+            apiService.getAnimeRanking(type, offset, pageSize).data
+        }
 
     override suspend fun getRemoteKeyId(resultEntity: RankingKeysAndAnimeEntity): AnimeRankingKeyEntity? =
-        database.animeRankingKeyDao().remoteKeyId(type, resultEntity.relation.id)
+        withContext(dispatchers) {
+            database.animeRankingKeyDao().remoteKeyId(type, resultEntity.relation.id)
+        }
 }
