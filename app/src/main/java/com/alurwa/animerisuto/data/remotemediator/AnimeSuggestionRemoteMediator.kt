@@ -1,44 +1,48 @@
 package com.alurwa.animerisuto.data.remotemediator
 
-import com.alurwa.animerisuto.data.source.local.entity.AnimeRemoteKeysEntity
+import com.alurwa.animerisuto.data.source.local.entity.AnimeSuggestionKeyEntity
 import com.alurwa.animerisuto.data.source.local.resultentity.SuggestionKeysAndAnimeEntity
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.data.source.remote.response.AnimeListResponse
 import com.alurwa.animerisuto.utils.DataMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Purwa Shadr Al 'urwa on 18/07/2021
  */
 
-class AnimeRemoteMediator3(
+class AnimeSuggestionRemoteMediator(
     private val apiService: ApiService,
     private val database: AnimeRisutoDatabase,
-) : AbstractRemoteMediator<SuggestionKeysAndAnimeEntity, AnimeListResponse, AnimeRemoteKeysEntity>() {
+) : AbstractRemoteMediator<SuggestionKeysAndAnimeEntity, AnimeListResponse, AnimeSuggestionKeyEntity>() {
     override fun getDatabase(): AnimeRisutoDatabase = database
 
     override suspend fun doDatabaseInRefresh() {
-        database.animeRemoteKeysDao().clearRemoteKeys()
+        database.animeSuggestionKeyDao().clearRemoteKeys()
         // database.animeDao().clearAnimeList()
     }
 
     override suspend fun getDataList(offset: Int, pageSize: Int): List<AnimeListResponse> {
-        return apiService.getAnimeSuggestion(
-            offset,
-            pageSize
-        ).data
+        return withContext(Dispatchers.IO){
+            apiService.getAnimeSuggestion(
+                offset,
+                pageSize
+            ).data
+        }
     }
 
-    override suspend fun getRemoteKeyId(resultEntity: SuggestionKeysAndAnimeEntity): AnimeRemoteKeysEntity? =
-        database.animeRemoteKeysDao().remoteKeysId(resultEntity.animeEntity.id)
+    override suspend fun getRemoteKeyId(resultEntity: SuggestionKeysAndAnimeEntity): AnimeSuggestionKeyEntity? =
+        database.animeSuggestionKeyDao().remoteKeysId(resultEntity.animeEntity.id)
 
-    override fun getRemoteKeyNext(remoteKey: AnimeRemoteKeysEntity?): Int? = remoteKey?.nextKey
+    override fun getRemoteKeyNext(remoteKey: AnimeSuggestionKeyEntity?): Int? = remoteKey?.nextKey
 
-    override fun getRemoteKeyPrev(remoteKey: AnimeRemoteKeysEntity?): Int? = remoteKey?.prevKey
+    override fun getRemoteKeyPrev(remoteKey: AnimeSuggestionKeyEntity?): Int? = remoteKey?.prevKey
 
-    override suspend fun getRemoteKeyToClosest(state: SuggestionKeysAndAnimeEntity?): AnimeRemoteKeysEntity? {
+    override suspend fun getRemoteKeyToClosest(state: SuggestionKeysAndAnimeEntity?): AnimeSuggestionKeyEntity? {
         return state?.animeEntity?.id?.let { id ->
-            database.animeRemoteKeysDao().remoteKeysId(id)
+            database.animeSuggestionKeyDao().remoteKeysId(id)
         }
     }
 
@@ -49,7 +53,7 @@ class AnimeRemoteMediator3(
         nextKey: Int?
     ) {
         val keys = listResponse.mapIndexed { index, it ->
-            AnimeRemoteKeysEntity(
+            AnimeSuggestionKeyEntity(
                 id = it.node.id,
                 no = index + offset,
                 prevKey = prevKey,
@@ -62,7 +66,7 @@ class AnimeRemoteMediator3(
                 listResponse,
                 offset
             )
-        database.animeRemoteKeysDao().insertAll(keys)
+        database.animeSuggestionKeyDao().insertAll(keys)
         database.animeDao().insertAll(animeListEntity)
     }
 }
