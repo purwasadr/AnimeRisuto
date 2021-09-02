@@ -26,25 +26,3 @@ fun List<AnimeListResponse>.toEntityWithPaging(offset: Int): List<AnimeEntity> =
             mean = it.node.mean
         )
     }
-
-fun List<AnimeListResponse>.getGenreEntitySet(): Set<GenreEntity> {
-    val tempSet = mutableSetOf<GenreEntity>()
-    this.forEach {
-        it.node.genres?.forEach { genresRes ->
-            tempSet.add(GenreEntity(genresRes.id, genresRes.name))
-        }
-    }
-
-    return tempSet
-}
-
-fun List<AnimeListResponse>.getGenreCrossList(): List<AnimeGenreCrossRefEntity> {
-    val tempList = mutableListOf<AnimeGenreCrossRefEntity>()
-    this.forEach {
-        it.node.genres?.forEach { genresRes ->
-            tempList.add(AnimeGenreCrossRefEntity(it.node.id, genresRes.id))
-        }
-    }
-
-    return tempList
-}
