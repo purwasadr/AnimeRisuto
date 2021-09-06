@@ -8,16 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alurwa.animerisuto.databinding.RcvItemAnimeBinding
 import com.alurwa.animerisuto.model.Anime
 
-/**
- * Created by Purwa Shadr Al 'urwa on 13/05/2021
- */
-
 class AnimeAdapter(
     private val onItemClickCallback: (id: Int) -> Unit
 ) : PagingDataAdapter<Anime, AnimeAdapter.ViewHolder>(COMPARATOR) {
 
     inner class ViewHolder(
-        private val binding: RcvItemAnimeBinding
+        val binding: RcvItemAnimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             val item = getItem(position)
