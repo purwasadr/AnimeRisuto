@@ -16,4 +16,11 @@ data class ItemCoba(
             else -> false
         }
     }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + title.hashCode()
+        result = 31 * result + (posterPath?.hashCode() ?: 0)
+        return result
+    }
 }
