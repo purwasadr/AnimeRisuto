@@ -7,7 +7,8 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.alurwa.animerisuto.data.AnimePagingSource
 import com.alurwa.animerisuto.data.remotemediator.AnimeRankingRemoteMediator
-import com.alurwa.animerisuto.data.remotemediator.AnimeRemoteMediator3
+import com.alurwa.animerisuto.data.remotemediator.AnimeSeasonalRemoteMediator
+import com.alurwa.animerisuto.data.remotemediator.AnimeSuggestionRemoteMediator
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.model.Anime
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 class AnimeRepository @Inject constructor(
     private val service: ApiService,
-    private val database: AnimeRisutoDatabase
+    private val database: AnimeRisutoDatabase,
 ) {
     fun getAnimeSuggestions(): Flow<PagingData<Anime>> {
         val pagingSourceFactory = { database.animeDao().getRemoteKeyAndAnime() }
@@ -25,7 +26,7 @@ class AnimeRepository @Inject constructor(
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-            remoteMediator = AnimeRemoteMediator3(
+            remoteMediator = AnimeSuggestionRemoteMediator(
                 service,
                 database
             ),
@@ -55,6 +56,34 @@ class AnimeRepository @Inject constructor(
                 type,
                 service,
                 database,
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow.map {
+            it.map { anime ->
+                Anime(
+                    anime.relation.id,
+                    anime.relation.title,
+                    anime.relation.posterPath,
+                    anime.relation.genres,
+                    anime.relation.mean
+                )
+            }
+        }
+    }
+
+    fun getAnimeSeasonalPaging(type: String, year: Int): Flow<PagingData<Anime>> {
+        val pagingSourceFactory = {
+            database.animeSeasonalKeyDao().getSeasonalKeyAndAnime(type, year)
+        }
+
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+            remoteMediator = AnimeSeasonalRemoteMediator(
+                type,
+                year,
+                database,
+                service,
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow.map {
