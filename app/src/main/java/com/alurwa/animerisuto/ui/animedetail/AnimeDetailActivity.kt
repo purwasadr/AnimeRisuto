@@ -2,15 +2,19 @@ package com.alurwa.animerisuto.ui.animedetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alurwa.animerisuto.R
 import com.alurwa.animerisuto.adapter.RecommendationAdapter
 import com.alurwa.animerisuto.data.Resource
 import com.alurwa.animerisuto.databinding.ActivityAnimeDetailBinding
 import com.alurwa.animerisuto.model.AnimeDetail
+import com.alurwa.animerisuto.ui.addedituseranime.AddEditUserAnimeActivity
 import com.alurwa.animerisuto.utils.SpacingDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -106,6 +110,15 @@ class AnimeDetailActivity : AppCompatActivity() {
             }
     }
 
+    private fun navigateToUpdateUserAnimeList() {
+        Intent(applicationContext, AddEditUserAnimeActivity::class.java)
+            .putExtra(AddEditUserAnimeActivity.EXTRA_ANIME_ID, binding.animeDetail!!.id)
+            .putExtra(AddEditUserAnimeActivity.EXTRA_EPISODE_COUNT, binding.animeDetail!!.numEpisodes)
+            .also {
+                startActivity(it)
+            }
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
@@ -117,6 +130,22 @@ class AnimeDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.anime_detail, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.change_status -> {
+                navigateToUpdateUserAnimeList()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     companion object {
