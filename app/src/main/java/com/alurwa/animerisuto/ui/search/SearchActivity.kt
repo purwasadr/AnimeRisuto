@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alurwa.animerisuto.R
@@ -21,8 +23,13 @@ import com.alurwa.animerisuto.utils.SpacingDecoration
 import com.alurwa.animerisuto.utils.Utility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import timber.log.Timber
+
 
 @AndroidEntryPoint
 class SearchActivity : AppCompatActivity() {
@@ -45,6 +52,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupToolbar()
         setupRecyclerView()
+        setupLoadingBar()
     }
 
     private fun setupToolbar() {
@@ -55,7 +63,24 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupAdapter() {
+    private fun setupLoadingBar() {
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                binding.pi.isVisible = loadStates.refresh is LoadState.Loading
+                binding.list.isVisible = loadStates.refresh is LoadState.NotLoading
+            }
+        }
+
+        lifecycleScope.launch {
+            adapter.loadStateFlow
+                // Only emit when REFRESH LoadState for RemoteMediator changes.
+                .distinctUntilChangedBy { it.refresh }
+                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect {
+                    binding.list.scrollToPosition(0)
+                }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -98,6 +123,11 @@ class SearchActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        updateQuery(menu ?: return false)
+        return true
+    }
+
     private fun setupSearchInput(menu: Menu) {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchMenu = menu.findItem(R.id.search)
@@ -110,8 +140,9 @@ class SearchActivity : AppCompatActivity() {
         with(searchView) {
             maxWidth = 10000
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            isIconified = false
+           // isIconified = false
             //   queryHint = "Search Anime"
+          //  isIconifiedByDefault = false
             inputType = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
         }
 
@@ -152,8 +183,31 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
+    private fun updateQuery(menu: Menu) {
+        val searchMenu = menu.findItem(R.id.search)
+        val searchView = searchMenu?.actionView as SearchView
+
+        searchView.setQuery(currentQueryString, true)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        if (Intent.ACTION_SEARCH == intent?.action) {
+            intent.getStringExtra(SearchManager.QUERY)?.also {
+                currentQueryString = it
+                invalidateOptionsMenu()
+            }
+        }
+
+        Timber.d("onNewIntent")
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    companion object {
     }
 }
