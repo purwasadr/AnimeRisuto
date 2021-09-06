@@ -10,12 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.alurwa.animerisuto.adapter.AnimeAdapter
 import com.alurwa.animerisuto.adapter.AnimeLoadStateAdapter
 import com.alurwa.animerisuto.databinding.FragmentAnimeSuggestionBinding
 import com.alurwa.animerisuto.ui.animedetail.AnimeDetailActivity
-import com.alurwa.animerisuto.utils.SpacingDecoration
 import com.alurwa.animerisuto.utils.asMergedLoadStates
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -99,13 +97,6 @@ class AnimeSuggestionFragment() : Fragment() {
     private fun setupRecyclerView() {
         binding.listAnime.setHasFixedSize(true)
         binding.listAnime.layoutManager = LinearLayoutManager(requireContext())
-        binding.listAnime.addItemDecoration(
-            SpacingDecoration(
-                16,
-                16,
-                RecyclerView.VERTICAL
-            )
-        )
         binding.listAnime.adapter = adapter.withLoadStateHeaderAndFooter(
             header = AnimeLoadStateAdapter(),
             footer = AnimeLoadStateAdapter() {
