@@ -18,7 +18,6 @@ import com.alurwa.animerisuto.data.Resource
 import com.alurwa.animerisuto.databinding.ActivityMainBinding
 import com.alurwa.animerisuto.ui.login.LoginActivity
 import com.alurwa.animerisuto.ui.search.SearchActivity
-import com.alurwa.animerisuto.utils.SessionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,15 +39,11 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController
     }
 
-    private val sessionManager by lazy {
-        SessionManager(applicationContext)
-    }
-
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!sessionManager.isLogged()) {
+        if (!viewModel.isLogged()) {
             Intent(this, LoginActivity::class.java)
                 .also { startActivity(it) }
             finish()
@@ -77,6 +72,12 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navView.setupWithNavController(navController)
+
+
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_round_menu_24)
+        }
     }
 
     private fun getUser() {
@@ -98,14 +99,14 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("LogOut") { dialog, _ ->
                 dialog.dismiss()
 
-                sessionManager.logOut()
+                viewModel.logout()
 
                 Intent(this, LoginActivity::class.java)
                     .also { startActivity(it) }
 
                 finish()
             }
-            .setNegativeButton("Batal") { dialog, _ ->
+            .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> item.onNavDestinationSelected(navController) ||
-                super.onOptionsItemSelected(item)
+                    super.onOptionsItemSelected(item)
         }
     }
 }
