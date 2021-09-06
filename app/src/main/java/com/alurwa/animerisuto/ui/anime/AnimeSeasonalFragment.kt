@@ -141,12 +141,16 @@ class AnimeSeasonalFragment : Fragment() {
 
     private fun dialogYear() {
 
-        val arrayYear = (2021 downTo 2000).map {
-            it.toString()
-        }.toTypedArray()
+        val yearState = viewModel.chipYearState.value
+        val rangeYear = (2021 downTo 2000)
+        val arrayYear = Array(rangeYear.count()) {
+            rangeYear.elementAt(it).toString()
+        }
+        val checkedItem = rangeYear.indexOf(yearState)
+
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Choose year")
-            .setSingleChoiceItems(arrayYear, 0) { dialog, which ->
+            .setSingleChoiceItems(arrayYear, checkedItem) { dialog, which ->
                 viewModel.setChipYearState(arrayYear[which].toInt())
                 dialog.dismiss()
             }
