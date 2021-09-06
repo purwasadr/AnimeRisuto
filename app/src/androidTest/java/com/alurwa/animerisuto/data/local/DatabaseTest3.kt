@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.alurwa.animerisuto.data.source.local.entity.GenreEntity
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
