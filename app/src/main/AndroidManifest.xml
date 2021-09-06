@@ -13,11 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimeRisuto">
         <activity
+            android:name=".ui.addedituseranime.AddEditUserAnimeActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.search.SearchActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.AnimeRisuto.Search">
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -38,8 +42,7 @@
                     android:scheme="risuto" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
