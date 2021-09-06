@@ -21,12 +21,12 @@ data class AnimeRankingKeyEntity(
     override val id: Long = 0,
     val type: String,
     @ColumnInfo(name = "anime_id")
-    override val animeId: Int,
+    val animeId: Int,
     @ColumnInfo(name = "prev_key")
     override val prevKey: Int?,
     @ColumnInfo(name = "next_key")
     override val nextKey: Int?
-) : IAnimeKeyEntity {
+) : IKeyEntity {
     companion object {
         const val TABLE_NAME = "anime_ranking_remote_key"
     }
