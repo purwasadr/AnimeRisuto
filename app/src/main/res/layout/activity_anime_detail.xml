@@ -7,6 +7,10 @@
         <variable
             name="animeDetail"
             type="com.alurwa.animerisuto.model.AnimeDetail" />
+
+        <variable
+            name="viewModel"
+            type="com.alurwa.animerisuto.ui.animedetail.AnimeDetailViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -34,7 +38,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_img_poster"
@@ -66,7 +71,7 @@
                     android:layout_marginEnd="24dp"
                     android:text="@{animeDetail.title}"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textAppearance="@style/TextAppearance.App.Headline6"
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -80,9 +85,9 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="24dp"
-                    android:text="@{animeDetail.japaneseTitle}"
+                    android:text="@{animeDetail.englishTitle}"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAppearance="@style/TextAppearance.App.Body1"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +103,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="@string/anime_detail_episodes_info"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textAppearance="@style/TextAppearance.App.Body2"
                     android:textColor="?android:attr/textColorSecondary"
                     app:layout_constraintEnd_toStartOf="@id/txt_ranked"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -107,13 +112,13 @@
 
                 <TextView
                     android:id="@+id/txt_num_episodes_val"
-                    android:text="@{String.valueOf(animeDetail.numEpisodes)}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-medium"
+                    android:text="@{String.valueOf(animeDetail.numEpisodes)}"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAppearance="@style/TextAppearance.App.Body1"
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintEnd_toEndOf="@id/txt_num_episodes"
                     app:layout_constraintStart_toStartOf="@id/txt_num_episodes"
@@ -129,7 +134,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="@string/anime_detail_rank_info"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textAppearance="@style/TextAppearance.App.Body2"
                     android:textColor="?android:attr/textColorSecondary"
                     app:layout_constraintEnd_toStartOf="@id/txt_mean"
                     app:layout_constraintStart_toEndOf="@id/txt_num_episodes"
@@ -141,10 +146,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    android:textColor="?android:attr/textColorPrimary"
                     android:text="@{`#` + animeDetail.rank.toString()}"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.App.Body1"
+                    android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintEnd_toEndOf="@+id/txt_ranked"
                     app:layout_constraintStart_toStartOf="@id/txt_ranked"
                     app:layout_constraintTop_toBottomOf="@id/txt_ranked"
@@ -159,7 +164,7 @@
                     android:layout_marginEnd="24dp"
                     android:text="@string/anime_detail_score_info"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textAppearance="@style/TextAppearance.App.Body2"
                     android:textColor="?android:attr/textColorSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/txt_ranked"
@@ -171,10 +176,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    android:textColor="?android:attr/textColorPrimary"
                     android:text="@{animeDetail.mean.toString()}"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.App.Body1"
+                    android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintEnd_toEndOf="@id/txt_mean"
                     app:layout_constraintStart_toStartOf="@id/txt_mean"
                     app:layout_constraintTop_toBottomOf="@id/txt_mean"
@@ -187,8 +192,11 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:ellipsize="end"
+                    android:maxLines="4"
                     android:text="@{animeDetail.synopsis}"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textAppearance="@style/TextAppearance.App.Caption"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -202,10 +210,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    android:fontFamily="sans-serif-medium"
                     android:text="@string/anime_detail_recommendations_info"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_synopsis" />
@@ -222,9 +229,9 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-                 <include
-                   layout="@layout/content_detail_bottom"
-                   bind:animeDetail="@{animeDetail}"/>
+                <include
+                    layout="@layout/content_detail_bottom"
+                    bind:animeDetail="@{animeDetail}" />
 
 
                 <!-- <include
