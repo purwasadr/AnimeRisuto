@@ -6,8 +6,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +18,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class DatabaseTest3 {
     private lateinit var db: AnimeRisutoDatabase
-    private lateinit var genreDao: GenreDao
+//    private lateinit var genreDao: GenreDao
 
     @Before
     fun setUp() {
@@ -29,7 +27,7 @@ class DatabaseTest3 {
             context,
             AnimeRisutoDatabase::class.java
         ).build()
-        genreDao = db.genreDao()
+//        genreDao = db.AnimeDao()
     }
 
     @After
@@ -39,14 +37,14 @@ class DatabaseTest3 {
 
     @Test
     fun writeAndReadFilmDetail() = runBlocking {
-        val genreEntity = GenreEntity(1, "Romance")
-        val genreEntity2 = GenreEntity(2, "Romance")
-
-        db.genreDao().insertAll(setOf(genreEntity))
-
-        val genre = db.genreDao().getGenre()
-
-        MatcherAssert.assertThat(genre, Matchers.`is`(genreEntity))
-        println(genre == genreEntity)
+//        val genreEntity = GenreEntity(1, "Romance")
+//        val genreEntity2 = GenreEntity(2, "Romance")
+//
+//        db.genreDao().insertAll(setOf(genreEntity))
+//
+//        val genre = db.genreDao().getGenre()
+//
+//        MatcherAssert.assertThat(genre, Matchers.`is`(genreEntity))
+//        println(genre == genreEntity)
     }
 }
