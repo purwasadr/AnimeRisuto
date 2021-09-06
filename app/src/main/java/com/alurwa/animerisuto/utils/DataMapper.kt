@@ -77,7 +77,7 @@ object DataMapper {
             genres = input.genres?.map {
                 it.name
             },
-            japaneseTitle = input.alternativeTitles?.ja
+            englishTitle = input.alternativeTitles?.en
         )
 
     fun animeDetailEntityToDomain(
@@ -99,7 +99,7 @@ object DataMapper {
                 studios = studios,
                 source = source,
                 genres = genres,
-                japaneseTitle = japaneseTitle
+                englishTitle = englishTitle
             )
         }
 
