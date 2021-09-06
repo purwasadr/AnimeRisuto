@@ -2,7 +2,8 @@ package com.alurwa.animerisuto.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.alurwa.animerisuto.data.IAnimeRepository
+import com.alurwa.animerisuto.data.repository.auth.AuthRepository
+import com.alurwa.animerisuto.data.repository.user.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,7 +13,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: IAnimeRepository
+    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
-    val user = repository.getUser().asLiveData()
+    val user = userRepository.getUser().asLiveData()
+
+    fun isLogged() = authRepository.isLogged()
+
+    fun logout() {
+        authRepository.logout()
+    }
 }
