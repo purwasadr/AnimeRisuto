@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/font/ubuntu.xml" value="0.2375" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/font/ubuntu_light.xml" value="0.2375" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/font/ubuntu_medium.xml" value="0.2375" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_add_edit_status.xml" value="0.33" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_add_edit_user_anime.xml" value="0.1469265367316342" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_anime_detail.xml" value="0.33" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/content_detail_bottom.xml" value="0.25" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_list_status.xml" value="0.1469265367316342" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_ranking.xml" value="0.13680659670164919" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_seasonal.xml" value="0.4077868852459016" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_suggestion.xml" value="0.1469265367316342" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_user_anime_list.xml" value="0.13680659670164919" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/rcv_item_anime.xml" value="0.22" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/menu/anime_detail.xml" value="0.27361111111111114" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/menu/update_user_anime_list.xml" value="0.27361111111111114" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
