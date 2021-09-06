@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Widget.App.SearchView" parent="android:style/Widget.Material.SearchView">
-        <item name="android:searchIcon">@android:color/transparent</item>
-        <item name="android:searchHintIcon" tools:targetApi="lollipop_mr1">@android:color/transparent</item>
-        <item name="android:queryBackground">@android:color/transparent</item>
-        <item name="android:submitBackground">@android:color/transparent</item>
+<resources>
+<!--    <style name="Widget.App.SearchView" parent="android:style/Widget.Material.SearchView">-->
+<!--        <item name="android:searchIcon">@android:color/transparent</item>-->
+<!--        <item name="android:searchHintIcon" tools:targetApi="lollipop_mr1">@android:color/transparent</item>-->
+<!--        <item name="android:queryBackground">@android:color/transparent</item>-->
+<!--        <item name="android:submitBackground">@android:color/transparent</item>-->
+<!--    </style>-->
+
+    <style name="Widget.App.Toolbar.Search" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextAppearance">?textAppearanceBody1</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar.Search</item>
     </style>
 </resources>
