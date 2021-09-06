@@ -5,7 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.alurwa.animerisuto.data.source.local.entity.IAnimeKeyEntity
+import com.alurwa.animerisuto.data.source.local.entity.IKeyEntity
 import com.alurwa.animerisuto.data.source.local.resultentity.EntryWithRelation
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
 import retrofit2.HttpException
@@ -19,7 +19,7 @@ import java.io.IOException
 abstract class AbstractRemoteMediator3<
     ResultEntity : EntryWithRelation<*, *>,
     Response,
-    RemoteKeyEntity : IAnimeKeyEntity
+    RemoteKeyEntity : IKeyEntity
     >(private val database: AnimeRisutoDatabase) : RemoteMediator<Int, ResultEntity>() {
 
 
