@@ -30,4 +30,6 @@
     <string name="anime_detail_rank_info">Rank</string>
     <string name="anime_detail_score_info">Score</string>
     <string name="anime_detail_recommendations_info">Recommendations</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
