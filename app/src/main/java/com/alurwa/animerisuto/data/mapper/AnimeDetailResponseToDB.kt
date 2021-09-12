@@ -1,6 +1,7 @@
 package com.alurwa.animerisuto.data.mapper
 
 import com.alurwa.animerisuto.data.source.local.entity.AnimeDetailEntity
+import com.alurwa.animerisuto.data.source.local.entity.AnimeListUserEntity
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
 import com.alurwa.animerisuto.model.AnimeRecommendation
 import com.alurwa.animerisuto.model.StartSeason
@@ -8,8 +9,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AnimeDetailResponseToDB @Inject constructor() :
-    Mapper<AnimeDetailResponse, AnimeDetailEntity> {
+class AnimeDetailResponseToDB @Inject constructor(
+   private val animeListUserResponseToDB: AnimeListUserResponseToDB
+) : Mapper<AnimeDetailResponse, AnimeDetailEntity> {
     override suspend fun map(from: AnimeDetailResponse) =
         AnimeDetailEntity(
             id = from.id,
@@ -34,7 +36,10 @@ class AnimeDetailResponseToDB @Inject constructor() :
             genres = from.genres?.map {
                 it.name
             },
-            englishTitle = from.alternativeTitles?.en
+            englishTitle = from.alternativeTitles?.en,
+            animeListUserEntity = from.myListStatus?.let {
+                animeListUserResponseToDB.map(it)
+            } ?: AnimeListUserEntity.EMPTY
         )
 
 }

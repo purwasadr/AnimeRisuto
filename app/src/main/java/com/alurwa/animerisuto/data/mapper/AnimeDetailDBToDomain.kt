@@ -18,10 +18,10 @@ class AnimeDetailDBToDomain @Inject constructor() : Mapper<AnimeDetailEntity, An
                 rank = this.rank,
                 mean = mean,
                 synopsis = synopsis,
-                recommendations = recommendations,
+                recommendations = recommendations.orEmpty(),
                 mediaType = mediaType,
                 status = status,
-                studios = studios,
+                studios = studios.orEmpty(),
                 source = source,
                 genres = genres,
                 englishTitle = englishTitle
