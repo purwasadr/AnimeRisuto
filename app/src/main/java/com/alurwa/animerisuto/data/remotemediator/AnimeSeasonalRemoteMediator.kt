@@ -44,8 +44,8 @@ class AnimeSeasonalRemoteMediator(
         }
 
         withContext(dispatcher) {
+            database.animeDao().insertOrUpdate(listResponse.toEntityWithPaging(offset))
             database.animeSeasonalKeyDao().insertAll(keys)
-            database.animeDao().insertAll(listResponse.toEntityWithPaging(offset))
         }
     }
 

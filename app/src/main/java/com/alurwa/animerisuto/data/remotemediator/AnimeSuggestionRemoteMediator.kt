@@ -66,7 +66,7 @@ class AnimeSuggestionRemoteMediator(
                 listResponse,
                 offset
             )
+        database.animeDao().insertOrUpdate(animeListEntity)
         database.animeSuggestionKeyDao().insertAll(keys)
-        database.animeDao().insertAll(animeListEntity)
     }
 }

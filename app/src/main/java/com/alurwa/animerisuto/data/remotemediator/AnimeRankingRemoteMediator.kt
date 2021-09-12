@@ -44,8 +44,8 @@ class AnimeRankingRemoteMediator(
         }
 
         withContext(dispatchers) {
+            database.animeDao().insertOrUpdate(listResponse.toEntityWithPaging(offset))
             database.animeRankingKeyDao().insertAll(keys)
-            database.animeDao().insertAll(listResponse.toEntityWithPaging(offset))
         }
     }
 
