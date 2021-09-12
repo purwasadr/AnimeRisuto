@@ -33,13 +33,16 @@ class AnimeRepository @Inject constructor(
             pagingSourceFactory = pagingSourceFactory
         ).flow.map {
             it.map { anime ->
-                Anime(
-                    anime.animeEntity.id,
-                    anime.animeEntity.title,
-                    anime.animeEntity.posterPath,
-                    anime.animeEntity.genres,
-                    anime.animeEntity.mean
-                )
+                anime.animeEntity.let {entity ->
+                    Anime(
+                        entity.id,
+                        entity.title,
+                        entity.posterPath,
+                        entity.genres,
+                        entity.mean
+                    )
+                }
+
             }
         }
     }
@@ -60,6 +63,7 @@ class AnimeRepository @Inject constructor(
             pagingSourceFactory = pagingSourceFactory
         ).flow.map {
             it.map { anime ->
+
                 Anime(
                     anime.relation.id,
                     anime.relation.title,
