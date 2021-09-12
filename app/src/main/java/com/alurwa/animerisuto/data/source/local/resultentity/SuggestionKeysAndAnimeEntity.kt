@@ -2,6 +2,7 @@ package com.alurwa.animerisuto.data.source.local.resultentity
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.alurwa.animerisuto.data.source.local.entity.AnimeDetailEntity
 import com.alurwa.animerisuto.data.source.local.entity.AnimeEntity
 import com.alurwa.animerisuto.data.source.local.entity.AnimeSuggestionKeyEntity
 
@@ -11,11 +12,12 @@ import com.alurwa.animerisuto.data.source.local.entity.AnimeSuggestionKeyEntity
 
 data class SuggestionKeysAndAnimeEntity(
     @Embedded
-    val animeRemoteKeysEntity2: AnimeSuggestionKeyEntity,
+    val animeRemoteKeysEntity2: AnimeSuggestionKeyEntity?,
 
     @Relation(
         parentColumn = "id",
-        entityColumn = "id"
+        entityColumn = "id",
+        entity = AnimeDetailEntity::class,
     )
     val animeEntity: AnimeEntity
 )
