@@ -51,4 +51,7 @@ data class AnimeDetailResponse(
 
     @field:SerializedName("alternative_titles")
     val alternativeTitles: AlternativeTitlesResponse?,
+
+    @field:SerializedName("my_list_status")
+    val myListStatus: AnimeListStatusResponse? = null
 )
