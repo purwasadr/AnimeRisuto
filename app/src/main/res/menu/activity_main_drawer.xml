@@ -13,4 +13,9 @@
             android:icon="@drawable/ic_round_library_books_24"
             android:title="@string/menu_manga" />
     </group>
+    <group >
+        <item
+            android:id="@+id/userAnimeListFragment"
+            android:title="Anime List" />
+    </group>
 </menu>
