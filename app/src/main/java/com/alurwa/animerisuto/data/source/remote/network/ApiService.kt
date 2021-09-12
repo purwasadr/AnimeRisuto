@@ -5,6 +5,7 @@ import androidx.annotation.IntRange
 import com.alurwa.animerisuto.BuildConfig
 import com.alurwa.animerisuto.data.source.remote.response.AccessTokenResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
+import com.alurwa.animerisuto.data.source.remote.response.AnimeListStatusResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeRankingResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeSuggestionsResponse
 import com.alurwa.animerisuto.data.source.remote.response.MangaRankingResponse
@@ -94,15 +95,16 @@ interface ApiService {
         @Field("rewatch_value") rewatchValue: Int? = null,
         @Field("tags")  tags: String? = null,
         @Field("comments") comments: String? = null
-    ): UserAnimeListResponse
+    ): AnimeListStatusResponse
 
     @GET("v2/users/@me/animelist")
     suspend fun getUserAnimeList(
         @Query("status") status: String? = null,
         @Query("sort") sort: String,
         @Query("limit") limit: Int,
-        @Query("offset") offset: Int
-    ): UserResponse
+        @Query("offset") offset: Int,
+        @Query("fields") fields: String = "list_status,num_episodes"
+    ): UserAnimeListResponse
 
     companion object {
         private const val API_BASE_URL = "https://api.myanimelist.net/"
