@@ -17,7 +17,6 @@ fun List<AnimeListResponse>.toEntityWithPaging(offset: Int): List<AnimeEntity> =
     this.mapIndexed { index, it ->
         AnimeEntity(
             id = it.node.id,
-            no = offset + index,
             title = it.node.title,
             posterPath = it.node.mainPicture?.medium,
             genres = it.node.genres?.map { genre ->
