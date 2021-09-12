@@ -16,4 +16,10 @@
         android:name="com.alurwa.animerisuto.ui.manga.MangaFragment"
         android:label="Manga"
         tools:layout="@layout/fragment_manga" />
+
+    <fragment
+        android:id="@+id/userAnimeListFragment"
+        android:name="com.alurwa.animerisuto.ui.useranimelist.UserAnimeListFragment"
+        android:label="User Anime List"
+        tools:layout="@layout/fragment_user_anime_list" />
 </navigation>
