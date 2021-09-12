@@ -1,23 +1,49 @@
 package com.alurwa.animerisuto.ui.useranimelist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.alurwa.animerisuto.adapter.AnimeLoadStateAdapter
+import com.alurwa.animerisuto.adapter.UserAnimeListAdapter
 import com.alurwa.animerisuto.databinding.FragmentUserAnimeListBinding
+import com.alurwa.animerisuto.ui.animedetail.AnimeDetailActivity
+import com.alurwa.animerisuto.utils.asMergedLoadStates
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
+import timber.log.Timber
 
+@AndroidEntryPoint
 class UserAnimeListFragment : Fragment() {
 
     private var _binding: FragmentUserAnimeListBinding? = null
 
     private val binding get() = _binding!!
 
+    private val adapter: UserAnimeListAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        UserAnimeListAdapter()
+    }
+
+    private val viewModel: UserAnimeListViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentUserAnimeListBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentUserAnimeListBinding.inflate(
+            layoutInflater,
+            container,
+            false
+        )
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -25,6 +51,62 @@ class UserAnimeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupAdapter()
+        setupRecyclerView()
+        setupSwipeToRefresh()
+        getAnime()
+
+    }
+
+    private fun getAnime() {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.userAnimeList.collectLatest {
+                adapter.submitData(it)
+            }
+        }
+    }
+
+    private fun setupAdapter() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                binding.swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            adapter.loadStateFlow
+                .asMergedLoadStates()
+                // Only emit when REFRESH LoadState for RemoteMediator changes.
+                .distinctUntilChangedBy { it.refresh }
+                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect {
+                    Timber.d("Refresh tok " + it.refresh.toString())
+                    binding.listAnime.scrollToPosition(0)
+                }
+        }
+    }
+
+    private fun setupSwipeToRefresh() {
+        binding.swipeRefresh.setOnRefreshListener { adapter.refresh() }
+    }
+
+    private fun setupRecyclerView() {
+        binding.listAnime.setHasFixedSize(true)
+        binding.listAnime.layoutManager = LinearLayoutManager(requireContext())
+        binding.listAnime.adapter = adapter.withLoadStateFooter(
+            footer = AnimeLoadStateAdapter() {
+                adapter.retry()
+            }
+        )
+    }
+
+    private fun navigateToAnimeDetail(id: Int) {
+        Intent(requireContext(), AnimeDetailActivity::class.java)
+            .putExtra(AnimeDetailActivity.EXTRA_ID, id)
+            .also {
+                startActivity(it)
+            }
     }
 
     override fun onDestroyView() {
