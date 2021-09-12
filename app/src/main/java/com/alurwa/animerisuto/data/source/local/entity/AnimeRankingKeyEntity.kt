@@ -2,6 +2,7 @@ package com.alurwa.animerisuto.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
@@ -14,6 +15,15 @@ import androidx.room.PrimaryKey
     indices = [
         Index("anime_id"),
         Index("type")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = AnimeDetailEntity::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("anime_id"),
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE,
+        )
     ]
 )
 data class AnimeRankingKeyEntity(
