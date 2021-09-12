@@ -2,6 +2,7 @@ package com.alurwa.animerisuto.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.alurwa.animerisuto.data.source.local.entity.AnimeSeasonalKeyEntity.Companion.TABLE_NAME
@@ -11,11 +12,20 @@ import com.alurwa.animerisuto.data.source.local.entity.AnimeSeasonalKeyEntity.Co
     indices = [
         Index("anime_id"),
         Index("type")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = AnimeDetailEntity::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("anime_id"),
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE,
+        )
     ]
 )
 data class AnimeSeasonalKeyEntity(
     @PrimaryKey(autoGenerate = true)
-    override val id: Long = 0,
+    override val id: Long = 0L,
     val type: String,
     val year: Int,
     @ColumnInfo(name = "anime_id")
