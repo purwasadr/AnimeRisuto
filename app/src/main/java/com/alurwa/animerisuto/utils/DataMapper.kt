@@ -2,6 +2,7 @@ package com.alurwa.animerisuto.utils
 
 import com.alurwa.animerisuto.data.source.local.entity.AnimeDetailEntity
 import com.alurwa.animerisuto.data.source.local.entity.AnimeEntity
+import com.alurwa.animerisuto.data.source.local.entity.AnimeListUserEntity
 import com.alurwa.animerisuto.data.source.local.entity.MangaEntity
 import com.alurwa.animerisuto.data.source.remote.response.AnimeDetailResponse
 import com.alurwa.animerisuto.data.source.remote.response.AnimeListResponse
@@ -24,7 +25,6 @@ object DataMapper {
         input.mapIndexed { index, it ->
             AnimeEntity(
                 id = it.node.id,
-                no = paging + index,
                 title = it.node.title,
                 posterPath = it.node.mainPicture?.medium,
                 genres = it.node.genres?.map { genre ->
@@ -77,7 +77,8 @@ object DataMapper {
             genres = input.genres?.map {
                 it.name
             },
-            englishTitle = input.alternativeTitles?.en
+            englishTitle = input.alternativeTitles?.en,
+            animeListUserEntity = AnimeListUserEntity.EMPTY
         )
 
     fun animeDetailEntityToDomain(
@@ -93,10 +94,10 @@ object DataMapper {
                 rank = input.rank,
                 mean = mean,
                 synopsis = synopsis,
-                recommendations = recommendations,
+                recommendations = recommendations.orEmpty(),
                 mediaType = mediaType,
                 status = status,
-                studios = studios,
+                studios = studios.orEmpty(),
                 source = source,
                 genres = genres,
                 englishTitle = englishTitle
