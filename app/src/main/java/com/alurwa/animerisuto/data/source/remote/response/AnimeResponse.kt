@@ -22,7 +22,10 @@ data class AnimeResponse(
     val genres: List<GenreResponse>?,
 
     @field:SerializedName("mean")
-    val mean: Float?
+    val mean: Float?,
+
+    @field:SerializedName("num_episodes")
+    val numEpisodes: Int? = null,
 ) {
 
     companion object {
