@@ -108,8 +108,8 @@ abstract class AbstractRemoteMediator3<
             Timber.d("offset%s", offset.toString())
             Timber.d("page%s", page.toString())
 
-            val mangaList = getDataList(offset, state.config.pageSize)
-            val endOfPaginationReached = mangaList.isEmpty()
+            val dataList = getDataList(offset, state.config.pageSize)
+            val endOfPaginationReached = dataList.isEmpty()
 
             val prevKey = if (page == MYANIMELIST_STARTING_INDEX) null else page - 1
             val nextKey = if (endOfPaginationReached) null else page + 1
@@ -123,7 +123,7 @@ abstract class AbstractRemoteMediator3<
                     onLoadStateRefresh()
                 }
 
-                insertToDatabase(mangaList, offset, prevKey, nextKey)
+                insertToDatabase(dataList, offset, prevKey, nextKey)
             }
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
@@ -140,10 +140,10 @@ abstract class AbstractRemoteMediator3<
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { manga ->
+            ?.let { resultEntity ->
                 // Get the remote keys of the last item retrieved
                 // getRemoteKeysId()
-                getRemoteKeyId(manga)
+                getRemoteKeyId(resultEntity)
                 //   getDatabase().mangaRemoteKeysDao().remoteKeysId(getRemoteKeyId(manga))
             }
     }
@@ -154,9 +154,9 @@ abstract class AbstractRemoteMediator3<
         // Get the first page that was retrieved, that contained items.
         // From that first page, get the first item
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { manga ->
+            ?.let { resultEntity ->
                 // Get the remote keys of the first items retrieved
-                getRemoteKeyId(manga)
+                getRemoteKeyId(resultEntity)
             }
     }
 
