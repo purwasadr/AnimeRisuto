@@ -17,9 +17,9 @@ class AnimeListUserResponseToDB @Inject constructor() : Mapper<AnimeListStatusRe
                 rewatchValue = rewatchValue,
                 priority = priority,
                 numTimesRewatched = numTimesRewatched,
-                numWatchedEpisodes = numWatchedEpisodes,
+                numWatchedEpisodes = numEpisodesWatched,
                 status = status.orEmpty(),
-                tags = tags
+                tags = tags.orEmpty()
             )
         }
 }
