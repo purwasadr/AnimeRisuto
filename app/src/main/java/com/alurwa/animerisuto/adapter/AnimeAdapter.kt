@@ -25,6 +25,7 @@ class AnimeAdapter(
                         onItemClickCallback.invoke(item.id)
                     }
                 }
+                binding.executePendingBindings()
             }
         }
     }
