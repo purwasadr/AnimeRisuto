@@ -3,6 +3,7 @@ package com.alurwa.animerisuto.di
 import android.content.Context
 import com.alurwa.animerisuto.data.source.remote.network.ApiService
 import com.alurwa.animerisuto.data.source.remote.network.LoginService
+import com.alurwa.animerisuto.data.source.remote.network.TranslateService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +29,8 @@ object NetworkModule {
         @ApplicationContext context: Context,
         loginService: LoginService
     ): ApiService = ApiService.create(context, loginService)
+
+    @Singleton
+    @Provides
+    fun provideTranslateService() = TranslateService.create()
 }
