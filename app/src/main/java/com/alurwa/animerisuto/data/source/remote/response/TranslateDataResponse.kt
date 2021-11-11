@@ -2,7 +2,7 @@ package com.alurwa.animerisuto.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TranslateDataReponse(
+data class TranslateDataResponse(
     @field:SerializedName("result")
     val result: String? = null,
 
