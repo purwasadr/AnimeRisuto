@@ -44,6 +44,7 @@ class AnimeRankingAdapter(
                         onItemClickCallback.invoke(item.id)
                     }
                 }
+                executePendingBindings()
             }
         }
     }
