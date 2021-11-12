@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alurwa.animerisuto.R
 import com.alurwa.animerisuto.data.Resource
 import com.alurwa.animerisuto.databinding.ActivityAddEditUserAnimeBinding
+import com.alurwa.animerisuto.extensions.setupToolbar
 import com.alurwa.animerisuto.model.UserAnimeListParam
 import com.alurwa.animerisuto.utils.StatusType
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,9 +32,10 @@ class AddEditUserAnimeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        binding.toolbar.setupToolbar(this, "", true)
 
         setupInputView()
+        setupInputEpisodeWatched()
     }
 
     private fun setupInputView() {
@@ -44,15 +46,21 @@ class AddEditUserAnimeActivity : AppCompatActivity() {
             showDialogStatus()
         }
 
+        binding.actScore.setOnClickListener {
+            showDialogScore()
+        }
+    }
+
+    private fun setupInputEpisodeWatched() {
+        val totalEpisodes = intent.getIntExtra(EXTRA_EPISODE_COUNT, -1)
+
+        binding.tilEpisodeWatched.suffixText = "/ $totalEpisodes"
+
         binding.edtEpisodeWatched.doOnTextChanged { text, start, before, count ->
             if (text.toString() == (10).toString()) {
                 binding.tilEpisodeWatched.isErrorEnabled = true
                 binding.tilEpisodeWatched.error = "Cannot"
             }
-        }
-
-        binding.actScore.setOnClickListener {
-            showDialogScore()
         }
     }
 
@@ -66,7 +74,6 @@ class AddEditUserAnimeActivity : AppCompatActivity() {
         }
 
         val checkedItem = viewModel.status.value.ordinal
-
 
         MaterialAlertDialogBuilder(this)
             .setTitle("Status")
@@ -128,6 +135,11 @@ class AddEditUserAnimeActivity : AppCompatActivity() {
                     }
                 }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
