@@ -8,28 +8,43 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string name="item_desc_anime_poster">Poster Anime</string>
+    <string name="desc_img_poster">Poster Image</string>
+    <string name="desc_image_poster_list">Image Poster List</string>
+    <string name="desc_list_item_anime_star">Star Icon</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Hint -->
+
+
+    <!-- Message -->
+
+    <!-- Menu -->
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_manga">Manga</string>
     <string name="menu_anime">Anime</string>
     <string name="menu_login">Login</string>
-    <string name="item_desc_anime_poster">Poster Anime</string>
     <string name="menu_logout">Logout</string>
-    <string name="desc_img_poster">Poster Image</string>
-    <string name="desc_image_poster_list">Image Poster List</string>
-    <string name="anime_detail_status_info">Status</string>
-    <string name="anime_detail_type_info">Type</string>
-    <string name="anime_detail_aired_info">Aired</string>
-    <string name="anime_detail_premiere_info">Premiered</string>
-    <string name="anime_detail_studios_info">Studios</string>
-    <string name="desc_list_item_anime_star">Star Icon</string>
-    <string name="anime_detail_genres_info">Genres</string>
-    <string name="anime_detail_source_info">Source</string>
-    <string name="anime_detail_episodes_info">Episodes</string>
-    <string name="anime_detail_rank_info">Rank</string>
-    <string name="anime_detail_score_info">Score</string>
-    <string name="anime_detail_recommendations_info">Recommendations</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TabItem -->
+    <string name="tab_item_suggestion">Suggestion</string>
+    <string name="tab_item_ranking">Ranking</string>
+    <string name="tab_item_seasonal">Seasonal</string>
+
+    <!-- TextView -->
+    <string name="tv_status">Status</string>
+    <string name="tv_type_info">Type</string>
+    <string name="tv_aired_info">Aired</string>
+    <string name="tv_premiere_info">Premiered</string>
+    <string name="tv_studios_info">Studios</string>
+    <string name="tv_genres_info">Genres</string>
+    <string name="tv_source_info">Source</string>
+    <string name="tv_episodes_info">Episodes</string>
+    <string name="tv_rank_info">Rank</string>
+    <string name="tv_score_info">Score</string>
+    <string name="tv_recommendations_info">Recommendations</string>
 </resources>
