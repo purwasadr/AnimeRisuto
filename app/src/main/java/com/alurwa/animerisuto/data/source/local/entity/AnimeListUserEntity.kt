@@ -31,8 +31,8 @@ data class AnimeListUserEntity(
     @ColumnInfo(name = "my_list_status_num_status", defaultValue = "")
     val status: String = "",
 
-    @ColumnInfo(name = "my_list_status_num_tags")
-    val tags: List<String>? = null
+    @ColumnInfo(name = "my_list_status_num_tags", defaultValue = "")
+    val tags: List<String> = emptyList()
 ) {
     companion object {
         val EMPTY = AnimeListUserEntity(
