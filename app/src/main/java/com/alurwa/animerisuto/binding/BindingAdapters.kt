@@ -77,4 +77,22 @@ object BindingAdapters {
             txtView.text = "-"
         }
     }
+
+    /**
+     * Makes the View [View.INVISIBLE] unless the condition is met.
+     */
+    @BindingAdapter("invisibleUnless")
+    @JvmStatic
+    fun invisibleUnless(view: View, visible: Boolean) {
+        view.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+    }
+
+    /**
+     * Makes the View [View.GONE] unless the condition is met.
+     */
+    @BindingAdapter("goneUnless")
+    @JvmStatic
+    fun goneUnless(view: View, visible: Boolean) {
+        view.visibility = if (visible) View.VISIBLE else View.GONE
+    }
 }
