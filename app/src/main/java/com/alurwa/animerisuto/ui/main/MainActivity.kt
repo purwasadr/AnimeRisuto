@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (!viewModel.isLogged()) {
             Intent(this, LoginActivity::class.java)
                 .also { startActivity(it) }
@@ -50,11 +51,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
-
         setupNavigationDrawer()
-
         getUser()
     }
 
@@ -70,13 +68,12 @@ class MainActivity : AppCompatActivity() {
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
-
         navView.setupWithNavController(navController)
 
-
-
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_round_menu_24)
+            if (destination.id != R.id.userAnimeListFragment) {
+                supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_round_menu_24)
+            }
         }
     }
 
@@ -106,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
                 finish()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(R.string.btn_cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
