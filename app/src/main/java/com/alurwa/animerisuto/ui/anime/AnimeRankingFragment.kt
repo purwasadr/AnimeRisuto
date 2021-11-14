@@ -58,11 +58,8 @@ class AnimeRankingFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapter()
-
         setupChipGroup()
-
         setupRecyclerView()
-
         setupSwipeToRefresh()
     }
 
@@ -84,6 +81,7 @@ class AnimeRankingFragment() : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow
+                // Menggunakan LoadState yang diperuntukkan untuk RemoteMediator
                 .asMergedLoadStates()
                 // Only emit when REFRESH LoadState for RemoteMediator changes.
                 .distinctUntilChangedBy { it.refresh }
@@ -103,13 +101,6 @@ class AnimeRankingFragment() : Fragment() {
     private fun setupRecyclerView() {
         binding.listAnime.setHasFixedSize(true)
         binding.listAnime.layoutManager = LinearLayoutManager(requireContext())
-//        binding.listAnime.addItemDecoration(
-//            SpacingDecoration(
-//                16,
-//                16,
-//                RecyclerView.VERTICAL
-//            )
-//        )
         binding.listAnime.adapter = adapter.withLoadStateFooter(
             footer = AnimeLoadStateAdapter() {
                 adapter.retry()
