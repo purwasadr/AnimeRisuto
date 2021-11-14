@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alurwa.animerisuto.R
 import com.alurwa.animerisuto.adapter.RecommendationAdapter
-import com.alurwa.animerisuto.data.Resource
 import com.alurwa.animerisuto.databinding.ActivityAnimeDetailBinding
-import com.alurwa.animerisuto.model.AnimeDetail
 import com.alurwa.animerisuto.ui.addedituseranime.AddEditUserAnimeActivity
 import com.alurwa.animerisuto.utils.SpacingDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,50 +34,61 @@ class AnimeDetailActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         setupToolbar()
+        setupBinding()
         setupSynopsis()
         setupRecyclerView()
-        getAnimeDetail()
+        setupTranslateToggle()
+        setupView()
     }
 
-    private fun getAnimeDetail() {
-        lifecycleScope.launch {
-            viewModel.animeDetail3.collectLatest {
-                when (it) {
-                    is Resource.Success -> {
-                        val data = it.data
-                        if (data != null) {
-                            setupView(data)
-                        }
-                    }
-                }
-            }
-        }
+    private fun setupBinding() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
     }
 
     private fun setupSynopsis() {
-        binding.txtSynopsis.setOnClickListener { toogleSynopsisCollapse() }
+        binding.tvSynopsis.setOnClickListener { toggleSynopsisCollapse() }
     }
 
-    private fun toogleSynopsisCollapse() {
+    private fun toggleSynopsisCollapse() {
         if (isSynopsisCollapsed) {
-            binding.txtSynopsis.maxLines = Integer.MAX_VALUE
+            binding.tvSynopsis.maxLines = Integer.MAX_VALUE
         } else {
-            binding.txtSynopsis.maxLines = 4
+            binding.tvSynopsis.maxLines = 4
         }
 
         isSynopsisCollapsed = !isSynopsisCollapsed
     }
 
-    private fun setupView(animeDetail: AnimeDetail) {
-        binding.animeDetail = animeDetail
-        binding.listRecommendations.adapter = RecommendationAdapter(
-            animeDetail.recommendations
-        ) {
-            navigateToAnimeDetail(it)
-        }
+    private fun setupTranslateToggle() {
+        binding.cbTranslate.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.setIsTranslated(isChecked)
 
-        supportActionBar?.run {
-            title = animeDetail.title
+            if (isChecked) {
+                binding.cbTranslate.text = "Lihat Asli"
+
+
+            } else {
+                binding.cbTranslate.text = "Terjemahkan Ke indo"
+            }
+        }
+    }
+
+    private fun setupView() {
+        lifecycleScope.launch {
+            viewModel.animeDetail.collectLatest { animeDetail ->
+                if (animeDetail != null) {
+                    binding.listRecommendations.adapter = RecommendationAdapter(
+                        animeDetail.recommendations
+                    ) {
+                        navigateToAnimeDetail(it)
+                    }
+                }
+
+                supportActionBar?.run {
+                    title = animeDetail?.title.orEmpty()
+                }
+            }
         }
     }
 
@@ -112,8 +121,8 @@ class AnimeDetailActivity : AppCompatActivity() {
 
     private fun navigateToUpdateUserAnimeList() {
         Intent(applicationContext, AddEditUserAnimeActivity::class.java)
-            .putExtra(AddEditUserAnimeActivity.EXTRA_ANIME_ID, binding.animeDetail!!.id)
-            .putExtra(AddEditUserAnimeActivity.EXTRA_EPISODE_COUNT, binding.animeDetail!!.numEpisodes)
+            .putExtra(AddEditUserAnimeActivity.EXTRA_ANIME_ID, viewModel.animeDetail.value!!.id)
+            .putExtra(AddEditUserAnimeActivity.EXTRA_EPISODE_COUNT, viewModel.animeDetail.value!!.numEpisodes)
             .also {
                 startActivity(it)
             }
@@ -145,7 +154,6 @@ class AnimeDetailActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-
     }
 
     companion object {
