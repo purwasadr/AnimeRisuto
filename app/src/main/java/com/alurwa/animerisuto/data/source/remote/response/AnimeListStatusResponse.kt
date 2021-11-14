@@ -25,8 +25,8 @@ data class AnimeListStatusResponse(
 	@field:SerializedName("num_times_rewatched")
 	val numTimesRewatched: Int? = null,
 
-	@field:SerializedName("num_watched_episodes")
-	val numWatchedEpisodes: Int? = null,
+	@field:SerializedName("num_episodes_watched")
+	val numEpisodesWatched: Int? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null,
