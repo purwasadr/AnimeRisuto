@@ -7,18 +7,20 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/font/ubuntu_light.xml" value="0.2375" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/font/ubuntu_medium.xml" value="0.2375" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_add_edit_status.xml" value="0.33" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_add_edit_user_anime.xml" value="0.1469265367316342" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_add_edit_user_anime.xml" value="0.33" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_anime_detail.xml" value="0.33" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/content_detail_bottom.xml" value="0.25" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime.xml" value="0.1469265367316342" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_list_status.xml" value="0.1469265367316342" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_ranking.xml" value="0.13680659670164919" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_seasonal.xml" value="0.4077868852459016" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_anime_suggestion.xml" value="0.1469265367316342" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/fragment_user_anime_list.xml" value="0.13680659670164919" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/list_item_anime_ranking.xml" value="0.23387096774193547" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/list_item_user_anime_list.xml" value="0.5" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/list_item_user_anime_list.xml" value="0.3233333333333333" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/nav_header_main.xml" value="0.25" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/layout/rcv_item_anime.xml" value="0.33" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/menu/anime_detail.xml" value="0.27361111111111114" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/AnimeRisuto/app/src/main/res/menu/update_user_anime_list.xml" value="0.27361111111111114" />
