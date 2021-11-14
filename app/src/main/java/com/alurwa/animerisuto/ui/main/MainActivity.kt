@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
+
+            // Tampilkan icon hamburger destinasi tidak di userAnimeListFragment
             if (destination.id != R.id.userAnimeListFragment) {
                 supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_round_menu_24)
             }
