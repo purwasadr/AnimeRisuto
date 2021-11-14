@@ -33,29 +33,20 @@ import com.alurwa.animerisuto.data.source.local.room.dao.UserDao
         AnimeSeasonalKeyEntity::class,
         UserAnimeListKeyEntity::class
     ],
-    version = 36,
+    version = 37,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AnimeRisutoDatabase : RoomDatabase() {
 
     abstract fun animeDao(): AnimeDao
-
     abstract fun mangaDao(): MangaDao
-
     abstract fun mangaRemoteKeysDao(): MangaRemoteKeysDao
-
     abstract fun animeDetailDao(): AnimeDetailDao
-
     abstract fun userDao(): UserDao
-
     abstract fun animeSuggestionKeyDao(): AnimeSuggestionKeyDao
-
     abstract fun animeRankingKeyDao(): AnimeRankingKeyDao
-
     abstract fun animeSeasonalKeyDao(): AnimeSeasonalKeyDao
-
     abstract fun userAnimeListDao(): UserAnimeListDao
-
     abstract fun userAnimeListKeyDao(): UserAnimeListKeyDao
 }
