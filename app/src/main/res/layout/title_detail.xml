@@ -27,7 +27,7 @@
             tools:text="Your Name." />
 
         <TextView
-            android:id="@+id/txt_japanese_title"
+            android:id="@+id/tv_japanese_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toStartOf="@id/txt_ranked"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_japanese_title" />
 
         <TextView
             android:id="@+id/txt_num_episodes_val"
@@ -76,7 +76,7 @@
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintEnd_toStartOf="@id/txt_mean_val"
             app:layout_constraintStart_toEndOf="@id/txt_num_episodes"
-            app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_japanese_title" />
 
         <TextView
             android:id="@+id/txt_ranked_val"
@@ -101,7 +101,7 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintStart_toStartOf="@id/txt_mean_val"
-            app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_japanese_title" />
 
         <TextView
             android:id="@+id/txt_mean_val"
