@@ -15,31 +15,47 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_poster"
+            imagePoster="@{anime.posterPath}"
+            android:layout_width="90dp"
+            android:layout_height="135dp"
+            android:elevation="2dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:cardCornerRadius="4dp"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.PosterRounded"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-            <ImageView
-                android:id="@+id/img_poster"
-                imagePoster="@{anime.posterPath}"
-                android:layout_width="90dp"
-                android:layout_height="135dp"
-                android:contentDescription="@string/item_desc_anime_poster"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
-        </com.google.android.material.card.MaterialCardView>
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/card_img"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"-->
+<!--            app:cardCornerRadius="4dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/img_poster"-->
+<!--                imagePoster="@{anime.posterPath}"-->
+<!--                android:layout_width="90dp"-->
+<!--                android:layout_height="135dp"-->
+<!--                android:contentDescription="@string/item_desc_anime_poster"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                tools:srcCompat="@tools:sample/backgrounds/scenic" />-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
 
 
         <TextView
-            android:id="@+id/txt_title"
+            android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -51,8 +67,8 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/card_img"
-            app:layout_constraintTop_toTopOf="@+id/card_img"
+            app:layout_constraintStart_toEndOf="@+id/img_poster"
+            app:layout_constraintTop_toTopOf="@+id/img_poster"
             tools:text="Shingeki No Kyujin : wdijawjajwdaiiawdawjdwaodijadioawjdiowajd" />
 
         <ImageView
@@ -62,26 +78,26 @@
             android:layout_marginStart="16dp"
             android:scaleType="centerInside"
             android:contentDescription="@string/desc_list_item_anime_star"
-            app:layout_constraintBottom_toTopOf="@+id/txt_genres"
-            app:layout_constraintStart_toEndOf="@+id/card_img"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title"
+            app:layout_constraintBottom_toTopOf="@+id/tv_genres"
+            app:layout_constraintStart_toEndOf="@+id/img_poster"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             app:srcCompat="@drawable/ic_round_star_rate_24"
             app:tint="@android:color/holo_orange_light" />
 
         <TextView
-            android:id="@+id/txt_mean"
+            android:id="@+id/tv_mean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:text="@{anime.mean.toString()}"
             android:textAppearance="@style/TextAppearance.App.Body2"
-            app:layout_constraintBottom_toTopOf="@id/txt_genres"
+            app:layout_constraintBottom_toTopOf="@id/tv_genres"
             app:layout_constraintStart_toEndOf="@+id/img_star"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             tools:text="9.7" />
 
         <TextView
-            android:id="@+id/txt_genres"
+            android:id="@+id/tv_genres"
             txtStringList="@{anime.genres}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -91,9 +107,9 @@
             android:maxLines="2"
             android:textAppearance="@style/TextAppearance.App.Body2"
             android:textColor="?android:attr/textColorSecondary"
-            app:layout_constraintBottom_toBottomOf="@id/card_img"
+            app:layout_constraintBottom_toBottomOf="@id/img_poster"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txt_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
             tools:text="Romance, School, And Comedy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
