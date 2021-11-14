@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.alurwa.animerisuto.R
 import com.alurwa.animerisuto.adapter.AnimePagerAdapter
 import com.alurwa.animerisuto.databinding.FragmentAnimeBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -33,6 +34,7 @@ class AnimeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Panggil dahulu agar Child Fragment dapat menggunakan Shared ViewModel
         viewModel
 
         setupViewPager()
@@ -42,20 +44,18 @@ class AnimeFragment : Fragment() {
     private fun setupViewPager() {
         binding.vp.adapter = AnimePagerAdapter(this)
         binding.vp.offscreenPageLimit = 1
-        binding.vp.isUserInputEnabled = false
     }
 
     private fun setupTabLayoutMediator() {
         TabLayoutMediator(
             binding.tabLayout,
             binding.vp,
-            true,
-            false
+            true
         ) { tab, position ->
             when (position) {
-                0 -> tab.text = "Suggestion"
-                1 -> tab.text = "Ranking"
-                2 -> tab.text = "Seasonal"
+                0 -> tab.text = getString(R.string.tab_item_suggestion)
+                1 -> tab.text = getString(R.string.tab_item_ranking)
+                2 -> tab.text = getString(R.string.tab_item_seasonal)
                 else -> throw IllegalStateException()
             }
         }.attach()
