@@ -47,4 +47,5 @@
     <string name="tv_rank_info">Rank</string>
     <string name="tv_score_info">Score</string>
     <string name="tv_recommendations_info">Recommendations</string>
+    <string name="btn_cancel">Cancel</string>
 </resources>

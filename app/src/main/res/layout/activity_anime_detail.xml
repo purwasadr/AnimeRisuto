@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
+            goneUnless="@{!viewModel.isDataLoading()}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +62,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
-                    android:id="@+id/txt_title"
+                    android:id="@+id/tv_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -77,7 +78,7 @@
                     tools:text="Your Name." />
 
                 <TextView
-                    android:id="@+id/txt_japanese_title"
+                    android:id="@+id/tv_japanese_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -90,26 +91,26 @@
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
                 <TextView
-                    android:id="@+id/txt_num_episodes"
+                    android:id="@+id/tv_num_episodes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/anime_detail_episodes_info"
+                    android:text="@string/tv_episodes_info"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.App.Body2"
                     android:textColor="?android:attr/textColorSecondary"
-                    app:layout_constraintEnd_toStartOf="@id/txt_ranked"
+                    app:layout_constraintEnd_toStartOf="@id/tv_ranked"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_japanese_title" />
 
                 <TextView
-                    android:id="@+id/txt_num_episodes_val"
+                    android:id="@+id/tv_num_episodes_val"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -118,28 +119,28 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.App.Body1"
                     android:textColor="?android:attr/textColorPrimary"
-                    app:layout_constraintEnd_toEndOf="@id/txt_num_episodes"
-                    app:layout_constraintStart_toStartOf="@id/txt_num_episodes"
-                    app:layout_constraintTop_toBottomOf="@id/txt_num_episodes"
+                    app:layout_constraintEnd_toEndOf="@id/tv_num_episodes"
+                    app:layout_constraintStart_toStartOf="@id/tv_num_episodes"
+                    app:layout_constraintTop_toBottomOf="@id/tv_num_episodes"
                     tools:text="13" />
 
                 <TextView
-                    android:id="@+id/txt_ranked"
+                    android:id="@+id/tv_ranked"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/anime_detail_rank_info"
+                    android:text="@string/tv_rank_info"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.App.Body2"
                     android:textColor="?android:attr/textColorSecondary"
-                    app:layout_constraintEnd_toStartOf="@id/txt_mean"
-                    app:layout_constraintStart_toEndOf="@id/txt_num_episodes"
-                    app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+                    app:layout_constraintEnd_toStartOf="@id/tv_mean"
+                    app:layout_constraintStart_toEndOf="@id/tv_num_episodes"
+                    app:layout_constraintTop_toBottomOf="@id/tv_japanese_title" />
 
                 <TextView
-                    android:id="@+id/txt_ranked_val"
+                    android:id="@+id/tv_ranked_val"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -148,28 +149,28 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.App.Body1"
                     android:textColor="?android:attr/textColorPrimary"
-                    app:layout_constraintEnd_toEndOf="@+id/txt_ranked"
-                    app:layout_constraintStart_toStartOf="@id/txt_ranked"
-                    app:layout_constraintTop_toBottomOf="@id/txt_ranked"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_ranked"
+                    app:layout_constraintStart_toStartOf="@id/tv_ranked"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ranked"
                     tools:text="#124" />
 
                 <TextView
-                    android:id="@+id/txt_mean"
+                    android:id="@+id/tv_mean"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="@string/anime_detail_score_info"
+                    android:text="@string/tv_score_info"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.App.Body2"
                     android:textColor="?android:attr/textColorSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/txt_ranked"
-                    app:layout_constraintTop_toBottomOf="@id/txt_japanese_title" />
+                    app:layout_constraintStart_toEndOf="@id/tv_ranked"
+                    app:layout_constraintTop_toBottomOf="@id/tv_japanese_title" />
 
                 <TextView
-                    android:id="@+id/txt_mean_val"
+                    android:id="@+id/tv_mean_val"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -178,13 +179,13 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.App.Body1"
                     android:textColor="?android:attr/textColorPrimary"
-                    app:layout_constraintEnd_toEndOf="@id/txt_mean"
-                    app:layout_constraintStart_toStartOf="@id/txt_mean"
-                    app:layout_constraintTop_toBottomOf="@id/txt_mean"
+                    app:layout_constraintEnd_toEndOf="@id/tv_mean"
+                    app:layout_constraintStart_toStartOf="@id/tv_mean"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mean"
                     tools:text="8.8" />
 
                 <TextView
-                    android:id="@+id/txt_synopsis"
+                    android:id="@+id/tv_synopsis"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -193,12 +194,12 @@
                     android:background="?attr/selectableItemBackground"
                     android:ellipsize="end"
                     android:maxLines="4"
-                    android:text="@{viewModel.animeDetail.synopsis}"
+                    android:text="@{viewModel.synopsis}"
                     android:textAppearance="@style/TextAppearance.App.Caption"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_ranked_val"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_ranked_val"
                     tools:text="jandnadnjdawdajwdndwadadnadadnadawdnawidawndawdawndawdnwddnadadadnawdwaujda" />
 
                 <CheckBox
@@ -209,23 +210,23 @@
                     android:background="?attr/selectableItemBackground"
                     android:button="@null"
                     android:text="Translate to Indo"
-                    app:layout_constraintBottom_toTopOf="@+id/txt_recommendations"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_recommendations"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_synopsis" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_synopsis" />
 
                 <TextView
-                    android:id="@+id/txt_recommendations"
+                    android:id="@+id/tv_recommendations"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    android:text="@string/anime_detail_recommendations_info"
+                    android:text="@string/tv_recommendations_info"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ck_tv_translate" />
+                    app:layout_constraintTop_toBottomOf="@+id/cb_translate" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_recommendations"
@@ -235,7 +236,7 @@
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_recommendations">
+                    app:layout_constraintTop_toBottomOf="@+id/tv_recommendations">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -251,6 +252,15 @@
 
 
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pb"
+            goneUnless="@{viewModel.isDataLoading()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
