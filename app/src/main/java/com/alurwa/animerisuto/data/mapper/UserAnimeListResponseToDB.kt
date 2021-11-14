@@ -15,7 +15,7 @@ class UserAnimeListResponseToDB @Inject constructor(
                 id = node.id,
                 title = node.title,
                 mainPictureUrl = node.mainPicture?.medium.orEmpty(),
-                num_episode_watched = animeListStatus?.numWatchedEpisodes ?: 0 ,
+                num_episode_watched = animeListStatus?.numEpisodesWatched ?: 0 ,
                 numEpisodes = node.numEpisodes ?: 0,
                 list_status_score = animeListStatus?.score,
                 list_status_status = animeListStatus?.status.orEmpty()
