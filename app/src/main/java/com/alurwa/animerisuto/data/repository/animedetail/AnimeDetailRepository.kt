@@ -1,7 +1,7 @@
 package com.alurwa.animerisuto.data.repository.animedetail
 
 import com.alurwa.animerisuto.data.NetworkBoundResource
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.data.mapper.AnimeDetailDBToDomain
 import com.alurwa.animerisuto.data.mapper.AnimeDetailResponseToDB
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
@@ -17,7 +17,7 @@ class AnimeDetailRepository @Inject constructor(
     private val localSourceMapper: AnimeDetailDBToDomain,
     private val remoteSourceMapper: AnimeDetailResponseToDB
 ) {
-    fun getAnimeDetail(id: Int): Flow<Resource<AnimeDetail?>> =
+    fun getAnimeDetail(id: Int): Flow<Result<AnimeDetail?>> =
         object : NetworkBoundResource<AnimeDetail?, AnimeDetailResponse>() {
             override fun loadFromDB(): Flow<AnimeDetail?> =
                 localSource.getAnimeDetail(id).map {

@@ -3,7 +3,7 @@ package com.alurwa.animerisuto.ui.animedetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.data.repository.animedetail.AnimeDetailRepository
 import com.alurwa.animerisuto.data.repository.translate.TranslateRepository
 import com.alurwa.animerisuto.model.AnimeDetail
@@ -35,9 +35,9 @@ class AnimeDetailViewModel @Inject constructor(
 
     private var translatedCache: String? = null
 
-    private var _animeDetail3: MutableStateFlow<Resource<AnimeDetail?>> =
-        MutableStateFlow(Resource.Loading())
-    val animeDetail3: StateFlow<Resource<AnimeDetail?>> = _animeDetail3
+    private var _animeDetail3: MutableStateFlow<Result<AnimeDetail?>> =
+        MutableStateFlow(Result.Loading)
+    val animeDetail3: StateFlow<Result<AnimeDetail?>> = _animeDetail3
 
     private var _animeDetail = MutableStateFlow<AnimeDetail?>(null)
     val animeDetail = _animeDetail.asStateFlow()
@@ -66,15 +66,13 @@ class AnimeDetailViewModel @Inject constructor(
 
                     val synopsis = animeDetail.value?.synopsis.orEmpty()
                     translateRepository.getTranslateToIndo(synopsis)
-                        .filter { it !is Resource.Loading }
+                        .filter { it !is Result.Loading }
                         .first()
                         .also {
-                            if (it is Resource.Success ) {
-                                val result = it.data?.result
-                                if (result != null) {
-                                    _synopsis.value = result
-                                    translatedCache = result
-                                }
+                            if (it is Result.Success ) {
+                                val result = it.data.result
+                                _synopsis.value = result
+                                translatedCache = result
                             }
                         }
                     Timber.d("Finish Translate")
@@ -86,15 +84,15 @@ class AnimeDetailViewModel @Inject constructor(
 
         animeDetailJob = viewModelScope.launch {
             repository.getAnimeDetail(extraId).collectLatest {
-                if (it is Resource.Success) {
+                if (it is Result.Success) {
                     _animeDetail.value = it.data
                     _synopsis.value = it.data?.synopsis.orEmpty()
                     translatedCache = null
                     setIsTranslated(false)
                     _isDataLoading.value = false
-                } else if (it is Resource.Loading) {
+                } else if (it is Result.Loading) {
                     _isDataLoading.value = true
-                } else if (it is Resource.Error) {
+                } else if (it is Result.Error) {
                     _isDataLoading.value = false
                 }
             }
@@ -108,7 +106,7 @@ class AnimeDetailViewModel @Inject constructor(
     suspend fun getTranslateToIndo(text: String) {
         viewModelScope.launch {
             translateRepository.getTranslateToIndo(text)
-                .filter { it is Resource.Error  }
+                .filter { it is Result.Error  }
         }
     }
 }

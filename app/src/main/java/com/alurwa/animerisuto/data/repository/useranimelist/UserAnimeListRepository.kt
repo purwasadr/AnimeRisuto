@@ -5,7 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.data.mapper.UserAnimeListResponseToDB
 import com.alurwa.animerisuto.data.remotemediator.UserAnimeListRemoteMediator
 import com.alurwa.animerisuto.data.source.local.room.AnimeRisutoDatabase
@@ -27,15 +27,15 @@ class UserAnimeListRepository @Inject constructor(
     private val userAnimeListMapper: UserAnimeListResponseToDB
 ) {
     fun updateUserAnimeList(userAnimeList: UserAnimeListParam) =
-        flow<Resource<AnimeListStatusResponse>> {
-            emit(Resource.Loading())
+        flow<Result<AnimeListStatusResponse>> {
+            emit(Result.Loading)
 
             when (val apiResponse = remoteSource.updateUserAnimeList(userAnimeList).first()) {
                 is ApiResponse.Success -> {
-                    emit(Resource.Success(apiResponse.data))
+                    emit(Result.Success(apiResponse.data))
                 }
                 is ApiResponse.Error -> {
-                    emit(Resource.Error(apiResponse.errorMessage))
+                    emit(Result.errorMessage(apiResponse.errorMessage))
                 }
             }
         }

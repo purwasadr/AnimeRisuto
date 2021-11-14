@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.alurwa.animerisuto.R
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.databinding.ActivityAddEditUserAnimeBinding
 import com.alurwa.animerisuto.extensions.setupToolbar
 import com.alurwa.animerisuto.model.UserAnimeListParam
@@ -121,16 +121,16 @@ class AddEditUserAnimeActivity : AppCompatActivity() {
             viewModel.updateUserAnimeList(params)
                 .collectLatest {
                     when(it) {
-                        is Resource.Success -> {
+                        is Result.Success -> {
                             finish()
                         }
 
-                        is Resource.Loading -> {
+                        is Result.Loading -> {
                            Timber.d("Loading")
                         }
 
-                        is Resource.Error -> {
-                            Timber.d(it.message)
+                        is Result.Error -> {
+                            Timber.d(it.exception.message)
                         }
                     }
                 }

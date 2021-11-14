@@ -1,5 +1,6 @@
 package com.alurwa.animerisuto.data
 
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
@@ -9,24 +10,24 @@ import kotlinx.coroutines.flow.map
 
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    private var result: Flow<Resource<ResultType>> = flow {
-        emit(Resource.Loading())
+    private var result: Flow<Result<ResultType>> = flow {
+        emit(Result.Loading)
         if (shouldFetch()) {
             when (val apiResponse = createCall().first()) {
                 is ApiResponse.Success -> {
                     saveCallResult(apiResponse.data)
-                    emitAll(loadFromDB().map { Resource.Success(it) })
+                    emitAll(loadFromDB().map { Result.Success(it) })
                 }
                 is ApiResponse.Empty -> {
-                    emitAll(loadFromDB().map { Resource.Success(it) })
+                    emitAll(loadFromDB().map { Result.Success(it) })
                 }
                 is ApiResponse.Error -> {
                     onFetchFailed()
-                    emit(Resource.Error<ResultType>(apiResponse.errorMessage))
+                    emit(Result.errorMessage(apiResponse.errorMessage))
                 }
             }
         } else {
-            emitAll(loadFromDB().map { Resource.Success(it) })
+            emitAll(loadFromDB().map { Result.Success(it) })
         }
     }
 
@@ -40,5 +41,5 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     protected abstract suspend fun saveCallResult(data: RequestType)
 
-    fun asFlow(): Flow<Resource<ResultType>> = result
+    fun asFlow(): Flow<Result<ResultType>> = result
 }

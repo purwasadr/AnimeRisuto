@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alurwa.animerisuto.BuildConfig
 import com.alurwa.animerisuto.constant.OAUTH_BASE_URL
 import com.alurwa.animerisuto.constant.REDIRECT_URI
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.databinding.ActivityLoginBinding
 import com.alurwa.animerisuto.ui.main.MainActivity
 import com.alurwa.animerisuto.utils.PkceGenerator
@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.getAccesToken(code, codeVerifier)
                     .collectLatest {
                         when (it) {
-                            is Resource.Success -> {
+                            is Result.Success -> {
 
                                 Snackbar.make(
                                     binding.root, "Login Success",Snackbar.LENGTH_SHORT
@@ -72,14 +72,14 @@ class LoginActivity : AppCompatActivity() {
 
                                 navigateToMain()
                             }
-                            is Resource.Error -> {
+                            is Result.Error -> {
                                 Toast.makeText(
                                     applicationContext,
-                                    it.message.toString(),
+                                    it.exception.message,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                            is Resource.Loading -> {
+                            is Result.Loading -> {
 
                             }
                         }

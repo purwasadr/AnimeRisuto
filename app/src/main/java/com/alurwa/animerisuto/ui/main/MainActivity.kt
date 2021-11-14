@@ -14,7 +14,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.alurwa.animerisuto.R
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.databinding.ActivityMainBinding
 import com.alurwa.animerisuto.ui.login.LoginActivity
 import com.alurwa.animerisuto.ui.search.SearchActivity
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     private fun getUser() {
         viewModel.user.observe(this) {
             when (it) {
-                is Resource.Success -> {
+                is Result.Success -> {
                     val user = it.data
                     //  val txtName = findViewById<TextView>(R.id.txt_name)
 

@@ -1,7 +1,7 @@
 package com.alurwa.animerisuto.data.repository.user
 
 import com.alurwa.animerisuto.data.NetworkBoundResource
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import com.alurwa.animerisuto.data.source.remote.response.UserResponse
 import com.alurwa.animerisuto.model.User
@@ -13,7 +13,7 @@ class UserRepository @Inject constructor(
    private val localSource: UserLocalSource,
    private val remoteSource: UserRemoteSource
 ) {
-    fun getUser(): Flow<Resource<User?>> =
+    fun getUser(): Flow<Result<User?>> =
         object : NetworkBoundResource<User?, UserResponse>() {
             override fun loadFromDB(): Flow<User?> =
                 localSource.getUser().map {

@@ -1,6 +1,6 @@
 package com.alurwa.animerisuto.data.repository.auth
 
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.data.source.remote.network.ApiResponse
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -13,8 +13,8 @@ class AuthRepository @Inject constructor(
     fun getAccessToken(
         code: String,
         codeVerifier: String
-    ) = flow<Resource<Boolean>> {
-        emit(Resource.Loading())
+    ) = flow<Result<Boolean>> {
+        emit(Result.Loading)
         val response = remoteSource.getAccessToken(code, codeVerifier)
         when (val apiResponse = response.first()) {
             is ApiResponse.Success -> {
@@ -26,11 +26,11 @@ class AuthRepository @Inject constructor(
                     true
                 )
 
-                emit(Resource.Success(true))
+                emit(Result.Success(true))
             }
 
             is ApiResponse.Error -> {
-                emit(Resource.Error(apiResponse.errorMessage))
+                emit(Result.errorMessage(apiResponse.errorMessage))
             }
         }
     }

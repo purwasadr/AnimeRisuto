@@ -1,7 +1,7 @@
 package com.alurwa.animerisuto.ui.login
 
 import androidx.lifecycle.ViewModel
-import com.alurwa.animerisuto.data.Resource
+import com.alurwa.animerisuto.data.Result
 import com.alurwa.animerisuto.data.repository.auth.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +16,6 @@ class LoginViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
 
-    fun getAccesToken(code: String, codeVerifier: String): Flow<Resource<Boolean>> =
+    fun getAccesToken(code: String, codeVerifier: String): Flow<Result<Boolean>> =
         repository.getAccessToken(code, codeVerifier)
 }
